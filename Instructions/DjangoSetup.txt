@@ -1,0 +1,22 @@
+TO START DJANGO PROJECT
+https://www.valentinog.com/blog/django-start/
+https://www.valentinog.com/blog/django-project/  ---> Template
+
+1. mkdir djtest && cd djtest
+2. python3 -m venv venv
+3. venv\scripts\activate
+4. pip install django
+5. django-admin startproject myproject .
+6. django-admin startapp testApp
+7. Add app to installed apps list in settings.py like this:
+"my_first_app.apps.MyFirstAppConfig",
+9. python manage.py runserver	
+10. create .gitignore with:
+venv
+*.DS_Store
+*.pyc
+__pycache__
+git init
+git add -A
+git commit -m "initial commit"
+
