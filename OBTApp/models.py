@@ -1,3 +1,98 @@
 from django.db import models
 
-# Create your models here.
+#This table contains the user details.
+class OurUser(models.Model):
+    name=models.CharField(max_length=100)
+    email=models.CharField(primary_key=True, max_length=200)
+    phoneNo=models.CharField(max_length=10)
+    location=models.CharField(max_length=1000)
+#This table contains the details of all books.
+class Book(models.Model):
+    GRADE_S = (
+        ('9', '9'),
+        ('10', '10'),
+        ('11', '11'),
+        ('12', '12'),
+    )
+    SUBJECT_S = (
+            ('M', 'Maths'),
+            ('P', 'Physics'),
+            ('C', 'Chemistry'),
+            ('CS', 'Computer Science'),
+            ('B', 'Biology'),
+            ('E', 'English'),
+            ('A','Accountancy'),
+            ('EC','Economics'),
+            ('BS','Business Studies'),
+            ('EN','Entrepreneurship'),
+            ('H','History'),
+            ('SO','Sociology'),
+            ('PS','Psychology'),
+    )
+    grade = models.CharField(max_length=2, choices = GRADE_S)
+    '''if grade in ('11', '12'):
+        SUBJECT_S = (
+            ('M', 'Maths'),
+            ('P', 'Physics'),
+            ('C', 'Chemistry'),
+            ('CS', 'Computer Science'),
+            ('B', 'Biology'),
+            ('E', 'English'),
+            ('A','Accountancy'),
+            ('EC','Economics'),
+            ('BS','Business Studies'),
+            ('EN','Entrepreneurship'),
+            ('H','History'),
+            ('SO','Sociology'),
+            ('PS','Psychology'),
+        )
+    elif grade in ('9','10'):
+        SUBJECT_S = (
+            ('M', 'Maths'),
+            ('P', 'Physics'),
+            ('C', 'Chemistry'),
+            ('CS', 'Computer Science'),
+            ('B', 'Biology'),
+            ('E', 'English'),
+            ('S','Sanskrit'),
+            ('SS','Social Studies'),
+            ('HI','Hindi'),
+            ('K','Kannada'),
+            ('F','French'),
+            ('G','German'),
+        )
+    '''
+    bookName = models.CharField(max_length=300)
+    subject = models.CharField(max_length=2, choices = SUBJECT_S)
+#This table contains details of Take Requests.
+class Take(models.Model):
+    email = models.ForeignKey(OurUser, on_delete=models.CASCADE)
+    completedFlag = models.IntegerField(default=0)
+#This table contains the details about each taken book. 
+class TakeOrder(models.Model):
+    takeNo = models.ForeignKey(Take, on_delete=models.CASCADE)
+    bookID = models.ForeignKey(Book, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    completedFlag = models.IntegerField(default=0)
+#This table contains details of Give Requests.
+class Give(models.Model):
+    email = models.ForeignKey(OurUser, on_delete=models.CASCADE)
+    completedFlag = models.IntegerField(default=0)
+#This table contains the details about each given book.
+class GiveOrder(models.Model):
+    CONDITION_S = (('1' ,'Like new'),
+            ('2','Fair'),
+            ('3','Pages torn'),
+            ('4','Pages missing'),
+            ('5','Notes written'),
+            )
+    giveNo = models.ForeignKey(Give, on_delete=models.CASCADE)
+    bookID = models.ForeignKey(Book, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    yearPub = models.CharField(max_length=4)
+    condition = models.CharField(max_length=1, choices = CONDITION_S)
+    completedFlag = models.IntegerField(default=0)
+#This table contains feedback.
+class Feedback(models.Model):
+    SID = models.ForeignKey(OurUser, on_delete=models.CASCADE)
+    message = models.CharField(max_length=10000)
