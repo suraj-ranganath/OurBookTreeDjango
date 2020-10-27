@@ -1,2 +1,2 @@
 # OurBookTreeDjango
-This is the Django version of Our Book Tree.
+This is the Django version of Our Book Tree. We aim to expand it.
