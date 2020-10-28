@@ -6,12 +6,6 @@ class BookForm(forms.ModelForm):
         model = Book
         fields = ['grade','bookName','subject']
 
-
-class GiveForm(forms.ModelForm):
-    class Meta:
-        model = Give
-        fields = ['email']
-
 class GiveOrderForm(forms.ModelForm):
     class Meta:
         model = GiveOrder
