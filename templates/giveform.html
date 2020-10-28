@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Give Books{% endblock %}
 
 {% block content %}
 <form method="POST">
 {%csrf_token%}
-{{ form.as_p }}
+{{ book_form.as_p }}
+{{ give_form.as_p }}
+{{ give_order_form.as_p }}
     <input type='submit' value='Save'/>
 </form>
 {% endblock %}
