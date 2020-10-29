@@ -14,9 +14,14 @@ def BookGiveFormView(request):
         if give_order_form.is_valid() and book_form.is_valid():
             book = book_form.save()
             give_order = give_order_form.save(False)    
-            
+
+            give = Give(email=request.user.email)
+            give.save()
+            give = give_form.save()
+
             give_order.bookID = book
             give_order.save()
+            give_order.giveNo = give 
             book_form = BookForm()
             give_order_form = GiveOrderForm()   
         context ={
@@ -34,5 +39,6 @@ def BookGiveFormView(request):
             'book_form':book_form,
             'give_order_form':give_order_form,
             'give_form':give_form,
+            'email':request.user.email,
         }
         return render(request,"giveform.html",context)

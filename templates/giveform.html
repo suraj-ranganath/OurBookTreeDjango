@@ -6,6 +6,7 @@
 <form method="POST">
 {%csrf_token%}
 {{ give_form.as_p }}
+<!-- Email: <input type='text' value={{email}} disabled> -->
 {{ book_form.as_p }}
 {{ give_order_form.as_p }}
     <input type='submit' value='Submit'/>
