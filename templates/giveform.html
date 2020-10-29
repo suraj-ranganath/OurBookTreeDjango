@@ -5,10 +5,9 @@
 {% block content %}
 <form method="POST">
 {%csrf_token%}
-<!--{{ give_form.as_p }}-->
-Email: <input type='text' value='a@b.com'/>
+{{ give_form.as_p }}
 {{ book_form.as_p }}
 {{ give_order_form.as_p }}
-    <input type='submit' value='Save'/>
+    <input type='submit' value='Submit'/>
 </form>
 {% endblock %}

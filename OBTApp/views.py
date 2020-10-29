@@ -9,14 +9,8 @@ def BookGiveFormView(request):
         book_form = BookForm(request.POST or None)
         give_order_form = GiveOrderForm(request.POST or None)   
 
-        '''
-        initial_data = {'email':'a@b.com'}
-        obj = Give.objects.get(id=1)
-        give_form = GiveForm(request.POST or None,instance=obj)
-        if give_form.is_valid():
-            give_form.save()
-            give_form = GiveForm()
-        '''
+        give_form = GiveForm(request.POST or None,initial={'email':request.user.email})
+
         if give_order_form.is_valid() and book_form.is_valid():
             book = book_form.save()
             give_order = give_order_form.save(False)    
@@ -28,15 +22,17 @@ def BookGiveFormView(request):
         context ={
             'book_form':book_form,
             'give_order_form':give_order_form,
-            #'give_form':give_form,
+            'give_form':give_form,
         }
         return render(request,"giveform.html",context)
     else:
         book_form = BookForm(request.POST or None)
         give_order_form = GiveOrderForm(request.POST or None) 
+        give_form = GiveForm(request.GET or None, initial = {'email':request.user.email})
+
         context ={
             'book_form':book_form,
             'give_order_form':give_order_form,
-            #'give_form':give_form,
+            'give_form':give_form,
         }
         return render(request,"giveform.html",context)
