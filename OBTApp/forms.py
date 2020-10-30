@@ -9,6 +9,7 @@ class GiveForm(forms.ModelForm):
     class Meta:
         model = Give
         fields = ['email']
+        email = forms.CharField()
 
 class GiveOrderForm(forms.ModelForm):
     class Meta:
