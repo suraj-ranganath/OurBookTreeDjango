@@ -5,10 +5,41 @@
 {% block content %}
 <form method="POST">
 {%csrf_token%}
-{{ give_form.as_p }}
-Email: <input type='text' value={{email}} disabled>
-{{ book_form.as_p }}
-{{ give_order_form.as_p }}
+<!-- {{ give_form.as_p }} -->
+Email: <input type='text' name="email" value={{email}} disabled><br><br>
+Grade: <select name="grade" id="grade" required>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+</select><br><br>
+Book Name: <input type="text" name="bookname" id="bookname" required><br><br>
+Subject: <select name="subject" id="subject" required>
+    <option value="M">Maths</option>
+    <option value="P">Physics</option>
+    <option value="C">Chemsitry</option>
+    <option value="CS">Computer Science</option>
+    <option value="B">Biology</option>
+    <option value="E">English</option>
+    <option value="A">Accountancy</option>
+    <option value="EC">Economics</option>
+    <option value="BS">Chemsitry</option>
+    <option value="EN">Entrepreneurship</option>
+    <option value="H">History</option>
+    <option value="SO">Sociology</option>
+    <option value="PS">Psychology</option>
+</select><br><br>
+Quantity: <input type="number" name="quan" id="quan" required><br><br>
+Year of Publishing: <input type='text' name='yearpub'  id='yearpub' data-length="4" pattern="[0-9]{4}" required/><br><br>
+Condition: <select name="condition" id="condition" required>
+    <option value="1">Like new</option>
+    <option value="2">Fair</option>
+    <option value="3">Pages torn</option>
+    <option value="4">Pages missing</option>
+    <option value="5">Notes written</option>
+</select><br><br>
+<!-- {{ book_form.as_p }}
+{{ give_order_form.as_p }} -->
     <input type='submit' value='Submit'/>
 </form>
 {% endblock %}
