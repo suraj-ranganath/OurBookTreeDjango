@@ -7,8 +7,8 @@ cursor = connection.cursor()
 
 def BookGiveFormView(request):
     if request.method == 'POST':
-        book_form = BookForm(request.POST or None)
-        give_order_form = GiveOrderForm(request.POST or None)   
+        book_form = BookForm()
+        give_order_form = GiveOrderForm()   
 
         #give_form = GiveForm(request.POST or None,initial={'email':request.user.email})
         '''
