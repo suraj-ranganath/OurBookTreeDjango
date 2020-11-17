@@ -90,7 +90,7 @@ class GiveOrder(models.Model):
     bookID = models.ForeignKey(Book, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     yearPub = models.CharField(max_length=4)
-    condition = models.CharField(max_length=1, choices = CONDITION_S)
+    condition = models.IntegerField(max_length=1, choices = CONDITION_S)
     completedFlag = models.IntegerField(default=0)
 #This table contains feedback.
 class Feedback(models.Model):
