@@ -17,9 +17,12 @@ def BookGiveFormView(request):
         condition=request.POST["condition"]
 
         cursor.execute("insert into obtapp_book (grade,bookName,subject) values ('{}','{}','{}')".format(grade,bookname,subject))
-        cursor.execute("insert into obtapp_giveorder (quantity,yearPub,condition) values ({},'{}','{}')".format(quan,yearpub,condition))
-        # cursor.execute("insert into obtapp_giveorder (quantity,yearPub,condition) values ({},'{}','{}')".format(quan,yearpub,condition))
-        print("insert into obtapp_giveorder (quantity,yearPub,condition) values ({},'{}',{})".format(quan,yearpub,condition))
+        cursor.execute("insert into obtapp_give (email_id,completedFlag) values ('{}',0)".format(email))
+        cursor.execute("select id from obtapp_book where id=(select max(id) from obtapp_book)")
+        bookid=cursor.fetchall()[0][0]
+        cursor.execute("select id from obtapp_give where id=(select max(id) from obtapp_give)")
+        giveno=cursor.fetchall()[0][0]
+        cursor.execute("insert into obtapp_giveorder (quantity,yearPub,`condition`,completedFlag,bookID_id,giveNo_id) values ({},'{}','{}',0,{},{})".format(quan,yearpub,condition,bookid,giveno))
         # book_form = BookForm()
         # give_order_form = GiveOrderForm()   
 
