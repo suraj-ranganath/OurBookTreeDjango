@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Give Books{% endblock %}
+
+{% block content %}
+<form method="POST">
+{%csrf_token%}
+<!-- {{ give_form.as_p }} -->
+Email: <input type='text' name="email" value={{email}} disabled><br><br>
+Grade: <select name="grade" id="grade" required>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+</select><br><br>
+Subject: <select name="subject" id="subject" required>
+    <option value="M">Maths</option>
+    <option value="P">Physics</option>
+    <option value="C">Chemsitry</option>
+    <option value="CS">Computer Science</option>
+    <option value="B">Biology</option>
+    <option value="E">English</option>
+    <option value="A">Accountancy</option>
+    <option value="EC">Economics</option>
+    <option value="BS">Chemsitry</option>
+    <option value="EN">Entrepreneurship</option>
+    <option value="H">History</option>
+    <option value="SO">Sociology</option>
+    <option value="PS">Psychology</option>
+</select><br><br>
+Book Name: <select name="bookname" id="bookname" required>
+    {% for i in bookchoices %}
+        <option value="{{i}}">{{i}}</option>
+    {% endfor %}
+</select><br><br>
+Quantity: <input type="number" name="quan" id="quan" required><br><br>
+<!-- {{ book_form.as_p }}
+{{ give_order_form.as_p }} -->
+    <input type='submit' value='Submit'/>
+</form>
+{% endblock %}

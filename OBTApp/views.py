@@ -63,3 +63,22 @@ def BookGiveFormView(request):
             return render(request,"giveform.html",context)
         except:
             return render(request,"home.html")
+
+def BookTakeFormView(request):
+    if request.method == "POST":
+        context = {
+            'email':request.user.email,
+            'bookchoices':['a','b','c'],
+        }
+        return render(request,"takeform.html",context)
+    else:
+        try:
+            context ={
+                'email':request.user.email,
+                'bookchoices':['a','b','c'],
+            }
+            return render(request,"takeform.html",context)
+        except:
+            return render(request,"home.html")
+
+
