@@ -23,6 +23,11 @@ def signup(request):
         if form.is_valid():
             user = form.save(commit=False)
             user.is_active = False
+            #user.refresh_from_db()
+            global location11
+            global phone11
+            location11 = form.cleaned_data.get('location')
+            phone11 = form.cleaned_data.get('phoneNo')
             user.save()
             current_site = get_current_site(request)
             subject = 'Activate Your Our Book Tree Account'
@@ -46,8 +51,11 @@ def activate(request, uidb64, token):
         user = None
 
     if user is not None and account_activation_token.check_token(user, token):
+        user.refresh_from_db()  # load the profile instance created by the signal
         user.is_active = True
         user.profile.email_confirmed = True
+        user.profile.location = location11
+        user.profile.phoneNo = phone11
         user.save()
         login(request, user)
         return redirect('home')
