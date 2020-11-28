@@ -84,7 +84,7 @@ class Book(models.Model):
     subject = models.CharField(max_length=2, choices = SUBJECT_S)
 #This table contains details of Take Requests.
 class Take(models.Model):
-    email = models.ForeignKey(OurUser, on_delete=models.CASCADE)
+    userid = models.ForeignKey(User, on_delete=models.CASCADE)
     completedFlag = models.IntegerField(default=0)
 #This table contains the details about each taken book. 
 class TakeOrder(models.Model):
@@ -94,7 +94,7 @@ class TakeOrder(models.Model):
     completedFlag = models.IntegerField(default=0)
 #This table contains details of Give Requests.
 class Give(models.Model):
-    email = models.ForeignKey(OurUser, on_delete=models.CASCADE)
+    userid = models.ForeignKey(User, on_delete=models.CASCADE)
     completedFlag = models.IntegerField(default=0)
 #This table contains the details about each given book.
 class GiveOrder(models.Model):

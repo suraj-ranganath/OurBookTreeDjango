@@ -68,40 +68,38 @@ def account_activation_sent(request):
 def BookGiveFormView(request):
     if request.method == 'POST':
 
-        email=request.user.email
-        grade=request.POST["grade"]
-        bookname=request.POST["bookname"]
-        subject=request.POST["subject"]
-        quan=request.POST["quan"]
-        yearpub=request.POST["yearpub"]
-        condition=request.POST["condition"]
+        userid = request.user.id
+        entries = request.POST
 
-        cursor.execute("insert into obtapp_book (grade,bookName,subject) values ('{}','{}','{}')".format(grade,bookname,subject))
-        cursor.execute("insert into obtapp_give (email_id,completedFlag) values ('{}',0)".format(email))
-        cursor.execute("select id from obtapp_book where id=(select max(id) from obtapp_book)")
+        cursor.execute("insert into obtapp_book (grade,bookName,subject) values ('{}','{}','{}')".format(entries['grade'],entries['bookname'],entries['subject']))
+        cursor.execute("insert into obtapp_give (userid_id,completedFlag) values ('{}',0)".format(userid))
+        cursor.execute("select id from obtapp_book where id=(select max(id) from obtapp_book)") #find better way
         bookid=cursor.fetchall()[0][0]
-        cursor.execute("select id from obtapp_give where id=(select max(id) from obtapp_give)")
+        cursor.execute("select id from obtapp_give where id=(select max(id) from obtapp_give) and userid_id = {}".format(userid))
         giveno=cursor.fetchall()[0][0]
-        cursor.execute("insert into obtapp_giveorder (quantity,yearPub,`condition`,completedFlag,bookID_id,giveNo_id) values ({},'{}','{}',0,{},{})".format(quan,yearpub,condition,bookid,giveno))
-        # book_form = BookForm()
-        # give_order_form = GiveOrderForm()   
-
-        # give_form = GiveForm(request.POST or None,initial={'email':request.user.email})
+        cursor.execute("insert into obtapp_giveorder (quantity,yearPub,`condition`,completedFlag,bookID_id,giveNo_id) values ({},'{}','{}',0,{},{})".format(entries['quan'],entries['yearpub'],entries['condition'],bookid,giveno))
         
-        # if give_order_form.is_valid() and book_form.is_valid():
-        #     book = book_form.save()
-        #     give_order = give_order_form.save(False)    
+        # saving data to db using django forms 
+        '''
+        book_form = BookForm()
+        give_order_form = GiveOrderForm()   
 
-        #     give = Give(email=request.user.email)
-        #     give.save()
-        #     give = give_form.save()
+        give_form = GiveForm(request.POST or None,initial={'email':request.user.email})
+        
+        if give_order_form.is_valid() and book_form.is_valid():
+            book = book_form.save()
+            give_order = give_order_form.save(False)    
 
-        #     give_order.bookID = book
-        #     give_order.save()
-        #     give_order.giveNo = give 
-        #     book_form = BookForm()
-        #     give_order_form = GiveOrderForm()
-          
+            give = Give(email=request.user.email)
+            give.save()
+            give = give_form.save()
+
+            give_order.bookID = book
+            give_order.save()
+            give_order.giveNo = give 
+            book_form = BookForm()
+            give_order_form = GiveOrderForm()
+        '''
         context ={
             # 'book_form':book_form,
             # 'give_order_form':give_order_form,
@@ -117,7 +115,7 @@ def BookGiveFormView(request):
             context ={
                 # 'book_form':book_form,
                 # 'give_order_form':give_order_form,
-                #'give_form':give_form,
+                # 'give_form':give_form,
                 'email':request.user.email,
             }
             return render(request,"giveform.html",context)
@@ -126,6 +124,20 @@ def BookGiveFormView(request):
 
 def BookTakeFormView(request):
     if request.method == "POST":
+
+        userid = request.user.id
+        entries = request.POST
+        
+        cursor.execute("insert into obtapp_take (userid_id,completedFlag) values ('{}',0)".format(userid))
+        cursor.execute("select id from obtapp_book where grade = {} and subject = '{}' and bookname = '{}'".format(entries['grade'],entries['subject'],entries['bookname']))
+        bookid = cursor.fetchall()[0][0]
+        print(bookid)
+        cursor.execute("select id from obtapp_take where id=(select max(id) from obtapp_take) and userid_id = {}".format(userid))
+        takeno = cursor.fetchall()[0][0]
+        cursor.execute("insert into obtapp_takeorder (takeNo_id,bookID_id,quantity,completedFlag) values ({},{},{},0)".format(takeno,bookid,entries['quan']))
+
+
+
         context = {
             'email':request.user.email,
             'bookchoices':['a','b','c'],
@@ -135,7 +147,7 @@ def BookTakeFormView(request):
         try:
             context ={
                 'email':request.user.email,
-                'bookchoices':['a','b','c'],
+                'bookchoices':['a','b','c','RD Sharma'],
             }
             return render(request,"takeform.html",context)
         except:
