@@ -3,6 +3,7 @@
 {% block title %}Take Books{% endblock %}
 
 {% block content %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <form method="POST">
 {%csrf_token%}
 <!-- {{ give_form.as_p }} -->
@@ -14,6 +15,7 @@ Grade: <select name="grade" id="grade" required>
     <option value="12">12</option>
 </select><br><br>
 Subject: <select name="subject" id="subject" required>
+    <option value="" disabled selected hidden>Select Subject</option>
     <option value="M">Maths</option>
     <option value="P">Physics</option>
     <option value="C">Chemsitry</option>
@@ -28,11 +30,72 @@ Subject: <select name="subject" id="subject" required>
     <option value="SO">Sociology</option>
     <option value="PS">Psychology</option>
 </select><br><br>
-Book Name: <select name="bookname" id="bookname" required>
+
+<div class="row">
+    <select name="bookname" id="bookname" required>
+    <option value = '' disabled selected hidden> Select Subject First </option>
+    </select>
+      <script>
+        var appenddata1 = "";
+        var appenddata2 = "";
+        appenddata1 += "<option disabled selected hidden> Select Subject First </option> \n";
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+        $("#bookname").show();
+        $('select#subject').change(function () {
+          var optionSelected = $(this).find("option:selected");
+          var valueSelected = optionSelected.val();
+          var subject = optionSelected.text();
+          //subject = 'English';
+          console.log('in chapter subject = ', subject);
+          console.log('clearing chapter list');
+          $("select#bookname option").remove();
+          appenddata1 = "<option value = bookname disabled selected hidden> Select Book Name </option> \n";
+
+          $.ajax({
+            type: "GET",
+            url: "/getdetails/",
+            data: {
+              'cnt1': subject
+            },
+            async: false,
+            success: function (result) {
+              console.log('Ajax call success', result);
+              console.log('in chapter I am printing results of length:', result.length);
+              // console.log(result);
+
+              for (var i = 0; i <= result.length - 1; i++) {
+                console.log('in chapter for loop', result[i].name);
+                appenddata1 += "<option value = " + result[i].name + "> " + result[i].name +" </option> \n";
+              };
+
+            }, // success function
+            error: function (textStatus, errorThrown) {
+              console.log('Ajax call failure', textStatus, errorThrown);
+              appenddata1 += "<option value = AjaxError> ServerError</option> \n";
+            }
+
+          }); // end of ajax get
+          console.log('(Outside Overall Get Setting Chapter List with :', appenddata1);
+          appenddata2+="<option value = AjaxError> ServerError</option>"
+          appenddata2+="<option value = AjaxError> ServerError2</option> \n"
+          $("#bookname").append(appenddata1);
+
+        }); // end of subject change function
+        console.log('(Inside Script  Setting and Showing Chapter List with :', appenddata1);
+        $("#bookname").show();
+      </script>
+      <br><br>
+
+
+<!-- Book Name: <select name="bookname" id="bookname" required>
     {% for i in bookchoices %}
         <option value="{{i}}">{{i}}</option>
     {% endfor %}
-</select><br><br>
+</select><br><br> -->
 Quantity: <input type="number" name="quan" id="quan" required><br><br>
 <!-- {{ book_form.as_p }}
 {{ give_order_form.as_p }} -->

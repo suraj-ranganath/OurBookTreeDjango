@@ -153,6 +153,18 @@ def BookTakeFormView(request):
         except:
             return render(request,"home.html")
 
-
+def getdetails(request):
+    subject = request.GET['cnt1']
+    print ("ajax subject ", subject)
+    result_set = []
+    all_books = []
+    answer = str(subject[1:-1])
+    selected_subject = allsubjects.objects.get(name=answer)
+    print ("selected subject ", selected_subject)
+    # all_chapters = selected_subject.chapter123_set.all()
+    # for chapter in all_chapters:
+        # print ("chapter", chapter.name)
+        # result_set.append({'name': chapter.name})
+    # return HttpResponse(simplejson.dumps(result_set),content_type='application/json')
 
 
