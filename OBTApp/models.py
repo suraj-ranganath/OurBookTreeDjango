@@ -16,14 +16,6 @@ def update_user_profile(sender, instance, created, **kwargs):
         Profile.objects.create(user=instance)
     instance.profile.save()
 
-
-
-#This table contains the user details.
-class OurUser(models.Model):
-    name=models.CharField(max_length=100)
-    email=models.CharField(primary_key=True, max_length=200)
-    phoneNo=models.CharField(max_length=10)
-    location=models.CharField(max_length=1000)
 #This table contains the details of all books.
 class Book(models.Model):
     GRADE_S = (
@@ -110,10 +102,12 @@ class GiveOrder(models.Model):
     yearPub = models.CharField(max_length=4)
     condition = models.IntegerField(choices = CONDITION_S)
     completedFlag = models.IntegerField(default=0)
+'''
 #This table contains feedback.
 class Feedback(models.Model):
     SID = models.ForeignKey(OurUser, on_delete=models.CASCADE)
     message = models.CharField(max_length=10000)
+'''
 #This table contains all the subjects
 class allsubjects(models.Model):
     name = models.CharField(max_length=50)
