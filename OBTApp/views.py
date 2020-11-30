@@ -14,11 +14,12 @@ from django.contrib.auth import login, authenticate
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.decorators import login_required
 from OBTApp.tokens import account_activation_token
+import secrets
 # Create your views here.
 cursor = connection.cursor()
 def EmailSend(subject,body,ToEmail):
     gmail_user = 'bookabookasap@gmail.com'
-    gmail_password = 'ankithsucks'
+    gmail_password = secrets.obtpassword
 
     sent_from = gmail_user
     to = [ToEmail]
