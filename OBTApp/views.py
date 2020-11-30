@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+import smtplib
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.models import User
 from django.utils.encoding import force_bytes
@@ -15,7 +16,23 @@ from django.contrib.auth.decorators import login_required
 from OBTApp.tokens import account_activation_token
 # Create your views here.
 cursor = connection.cursor()
+def EmailSend(subject,body,ToEmail):
+    gmail_user = 'bookabookasap@gmail.com'
+    gmail_password = 'ankithsucks'
 
+    sent_from = gmail_user
+    to = [ToEmail]
+
+    email_text = """\
+    From: %s\nTo: %s\nSubject: %s\n%s
+
+    """ % (sent_from, ", ".join(to), subject, body)
+
+    server1 = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+    server1.ehlo()
+    server1.login(gmail_user, gmail_password)
+    server1.sendmail(sent_from, to, email_text)
+    server1.close() 
 
 def signup(request):
     if request.method == 'POST':
@@ -37,7 +54,7 @@ def signup(request):
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user),
             })
-            user.email_user(subject, message)
+            EmailSend(subject, message, user.email)
             return redirect('account_activation_sent')
     else:
         form = SignUpForm()
