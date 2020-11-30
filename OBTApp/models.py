@@ -102,6 +102,7 @@ class GiveOrder(models.Model):
     yearPub = models.CharField(max_length=4)
     condition = models.IntegerField(choices = CONDITION_S)
     completedFlag = models.IntegerField(default=0)
+
 '''
 #This table contains feedback.
 class Feedback(models.Model):
