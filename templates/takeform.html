@@ -7,25 +7,43 @@
 {%csrf_token%}
 <!-- {{ give_form.as_p }} -->
 Email: <input type='text' name="email" value={{email}} disabled><br><br>
-Grade: <select name="grade" id="grade" required>
+Grade: <select name="grade" id="grade" required onChange="form.submit();">
+  {% if not gradeflag %}
     <option value="Dummy" disabled selected hidden>Select Grade</option>
+    {% else %}
+    <option value="Dummy" disabled selected hidden>{{grade}}</option>
+    {% endif %}
     <option value="9">9</option>
     <option value="10">10</option>
     <option value="11">11</option>
     <option value="12">12</option>
 </select><br><br>
-<div id="myAnswers">
+
 
 <div id="Dummy">
-  Subject: <select name="subject" id="subject" >
-      <option value="znmd" disabled selected hidden>Select Subject</option>
-  </select><br><br>
+
+    {% if not subflag %}
+    Subject: <select required name="subject" id="subject" >
+    <option value="" disabled selected hidden>Select Subject</option>
+    </select>
+    {% else %}
+    Subject: <select name="subject" id="subject" >
+    <option value="" disabled selected hidden>{{subject}}</option>
+    </select>
+    {% endif %}
+ <br><br>
 </div>
 <div id="A" style="display: none;">
-  Subject: <select name="subject" id="subject" onChange="form.submit();">
-    <option value="znmd" disabled selected hidden>Select Subject</option>
-    <option value="M">Maths</option>
-    <option value="P">Physics</option>
+  Subject: <select required name="subject" id="subject" onChange="form.submit();">
+    {% if not subflag %}
+    <option value="" disabled selected hidden>Select Subject</option>
+    {% else %}
+    <option value="" selected>{{subject}}</option>
+    {% endif %}
+    {% for i in sublist %}
+    <option value="{{i.0}}">{{i.1}}</option>
+    {% endfor %}
+    <!-- <option value="P">Physics</option>
     <option value="C">Chemsitry</option>
     <option value="CS">Computer Science</option>
     <option value="B">Biology</option>
@@ -35,12 +53,16 @@ Grade: <select name="grade" id="grade" required>
     <option value="HI">Hindi</option>
     <option value="K">Kannada</option>
     <option value="F">French</option>
-    <option value="G">German</option>
+    <option value="G">German</option> -->
 </select><br><br>
 </div>
-<div id="B" style="display: none;">
-  Subject: <select name="subject" id="subject" onChange="form.submit();" value="choosesubject" name="choosesubject" action="#">
-      <option value="znmd" disabled selected hidden>Select Subject</option>
+<!-- <div id="B" style="display: none;">
+  Subject: <select required name="subject" id="subject" onChange="form.submit();">
+    {% if not subflag %}
+    <option value="" disabled selected hidden>Select Subject</option>
+    {% else %}
+    <option value="" disabled selected hidden>{{subject}}</option>
+    {% endif %}
       <option value="M">Maths</option>
       <option value="P">Physics</option>
       <option value="C">Chemsitry</option>
@@ -56,39 +78,44 @@ Grade: <select name="grade" id="grade" required>
       <option value="PS">Psychology</option>
   </select><br><br>
   </div>
-</div>
+</div> -->
 
 
 Book Name: <select name="bookname" id="bookname" required>
+  {% if bookflag %}
+  <option value="" disabled selected hidden>Select Book</option>
+  {% else %}
+  <option value="" disabled selected hidden>{{book}}</option>
+    {% endif %}
     {% for i in bookchoices %}
-        <option value="{{i}}">{{i}}</option>
+        <option value="{{i}}">{{i.0}}</option>
     {% endfor %}
 </select><br><br>
 Quantity: <input type="number" name="quan" id="quan" required><br><br>
 <!-- {{ book_form.as_p }}
 {{ give_order_form.as_p }} -->
-    <input type='submit' value='SubmitForm' name="SubmitForm" action="#"/>
+    <input type='submit' value='Submit' name="Submit" action="#"/>
 </form>
 <script>
-$("#grade").change(function(){
-  $("#A,#B").hide();
-  if(($(this).val() == "9") || ($(this).val() == "10")) {
-    $("#A").show();
-    $("#Dummy").hide();
-  } else{
-     $("#B").show();
-     $("#Dummy").hide(); 
-  }
-});
+// $("#grade").change(function(){
+//   $("#A,#B").hide();
+//   if(($(this).val() == "9") || ($(this).val() == "10")) {
+//     $("#A").show();
+//     $("#Dummy").hide();
+//   } else{
+//      $("#B").show();
+//      $("#Dummy").hide(); 
+//   }
+// });
 
-$(function()
-{
-    $('choosesubject').change(function()
-    {
-        if (($(this).val() != 'znmd') || ($(this).val() != ''))
-        $('.choosesubject').replaceWith('<input type="text" name="choosesubject" id="choosesubject">');
-    });
-}
-);
+// $(function()
+// {
+//     $('choosesubject').change(function()
+//     {
+//         if (($(this).val() != 'znmd') || ($(this).val() != ''))
+//         $('.choosesubject').replaceWith('<input type="text" name="choosesubject" id="choosesubject">');
+//     });
+// }
+// );
 </script>
 {% endblock %}

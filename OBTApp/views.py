@@ -142,35 +142,87 @@ def BookGiveFormView(request):
 
 def BookTakeFormView(request):
     if request.method == "POST":
+        
         entries = request.POST
-        # cursor.execute("select distinct bookName from obtapp_book where subject='{}' and grade='{}'".format(entries['subject'],entries['grade']))
-        # allbooks = cursor.fetchall()
-        print(dict(request.POST))
-        for i in request.POST:
-            print(request.POST[i])
-            if request.POST[i] == 'choosesubject':
-                print('hi')
+        if dict(request.POST).get('subject') in (None,''):
+            gradeflag = True
+            SUBJECT_LIST = []
+            if entries['grade'] in ('11', '12'):
+                SUBJECT_LIST += [
+                    ('M', 'Maths'),
+                    ('P', 'Physics'),
+                    ('C', 'Chemistry'),
+                    ('CS', 'Computer Science'),
+                    ('B', 'Biology'),
+                    ('E', 'English'),
+                    ('A','Accountancy'),
+                    ('EC','Economics'),
+                    ('BS','Business Studies'),
+                    ('EN','Entrepreneurship'),
+                    ('H','History'),
+                    ('SO','Sociology'),
+                    ('PS','Psychology'),
+                ]
+            elif entries['grade'] in ('9','10'):
+                SUBJECT_LIST += [
+                    ('M', 'Maths'),
+                    ('P', 'Physics'),
+                    ('C', 'Chemistry'),
+                    ('CS', 'Computer Science'),
+                    ('B', 'Biology'),
+                    ('E', 'English'),
+                    ('S','Sanskrit'),
+                    ('SS','Social Studies'),
+                    ('HI','Hindi'),
+                    ('K','Kannada'),
+                    ('F','French'),
+                    ('G','German'),
+                ]
 
-        '''
-        userid = request.user.id
+            context = {
+            'email':request.user.email,
+            'gradeflag':gradeflag,
+            'grade':entries['grade'],
+            'sublist':SUBJECT_LIST,
+            }
+            return render(request,"takeform.html",context)
+        elif dict(request.POST).get('bookname') in (None,''):
+            subflag = True
+            cursor.execute("select distinct bookName from obtapp_book where subject='{}' and grade={}".format(entries['subject'],entries['grade']))
+            allbooks = cursor.fetchall()
+
+            context = {
+            'email':request.user.email,
+            'bookchoices':allbooks,
+            'subflag':subflag,
+            'subject':entries['subject'],
+            'grade':entries['grade'],
+            }
+            return render(request,"takeform.html",context)
+        else:
+            bookflag = True
+
+            userid = request.user.id
+
+            cursor.execute("insert into obtapp_take (userid_id,completedFlag) values ('{}',0)".format(userid))
+            cursor.execute("select id from obtapp_book where grade = {} and subject = '{}' and bookname = '{}'".format(entries['grade'],entries['subject'],entries['bookname']))
+            bookid = cursor.fetchall()[0][0]
+
+            cursor.execute("select id from obtapp_take where id=(select max(id) from obtapp_take) and userid_id = {}".format(userid))
+            takeno = cursor.fetchall()[0][0]
+            cursor.execute("insert into obtapp_takeorder (takeNo_id,bookID_id,quantity,completedFlag) values ({},{},{},0)".format(takeno,bookid,entries['quan']))
+            
+            context = {
+            'email':request.user.email,
+            'bookchoices':allbooks,
+            'bookflag':bookflag,
+            'subject':entries['subject'],
+            'grade':entries['grade'],
+            'book':entries['bookname'],
+            }
+            return render(request,"takeform.html",context)
 
         
-        cursor.execute("insert into obtapp_take (userid_id,completedFlag) values ('{}',0)".format(userid))
-        cursor.execute("select id from obtapp_book where grade = {} and subject = '{}' and bookname = '{}'".format(entries['grade'],entries['subject'],entries['bookname']))
-        bookid = cursor.fetchall()[0][0]
-        print(bookid)
-        cursor.execute("select id from obtapp_take where id=(select max(id) from obtapp_take) and userid_id = {}".format(userid))
-        takeno = cursor.fetchall()[0][0]
-        cursor.execute("insert into obtapp_takeorder (takeNo_id,bookID_id,quantity,completedFlag) values ({},{},{},0)".format(takeno,bookid,entries['quan']))
-        '''
-
-
-        context = {
-            'email':request.user.email,
-            'bookchoices':['a','b','c'],
-            # 'allbooks':allbooks,
-        }
-        return render(request,"takeform.html",context)
     else:
         try:
             context ={
