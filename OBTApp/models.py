@@ -103,15 +103,11 @@ class GiveOrder(models.Model):
     condition = models.IntegerField(choices = CONDITION_S)
     completedFlag = models.IntegerField(default=0)
 
-'''
+
 #This table contains feedback.
 class Feedback(models.Model):
-    SID = models.ForeignKey(OurUser, on_delete=models.CASCADE)
+    SID = models.ForeignKey(User, on_delete=models.CASCADE)
     message = models.CharField(max_length=10000)
-'''
-#This table contains all the subjects
-class allsubjects(models.Model):
-    name = models.CharField(max_length=50)
-    def __unicode__(self):
-        return u'%s' % (self.name)
+
+
 

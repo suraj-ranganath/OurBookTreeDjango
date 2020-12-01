@@ -3,18 +3,26 @@
 {% block title %}Take Books{% endblock %}
 
 {% block content %}
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <form method="POST">
 {%csrf_token%}
 <!-- {{ give_form.as_p }} -->
 Email: <input type='text' name="email" value={{email}} disabled><br><br>
 Grade: <select name="grade" id="grade" required>
+    <option value="Dummy" disabled selected hidden>Select Grade</option>
     <option value="9">9</option>
     <option value="10">10</option>
     <option value="11">11</option>
     <option value="12">12</option>
 </select><br><br>
-Subject: <select name="subject" id="subject" required>
+<div id="myAnswers">
+
+<div id="Dummy">
+  Subject: <select name="subject" id="subject" required>
+      <option value="" disabled selected hidden>Select Subject</option>
+  </select><br><br>
+</div>
+<div id="A" style="display: none;">
+  Subject: <select name="subject" id="subject" required>
     <option value="" disabled selected hidden>Select Subject</option>
     <option value="M">Maths</option>
     <option value="P">Physics</option>
@@ -22,83 +30,55 @@ Subject: <select name="subject" id="subject" required>
     <option value="CS">Computer Science</option>
     <option value="B">Biology</option>
     <option value="E">English</option>
-    <option value="A">Accountancy</option>
-    <option value="EC">Economics</option>
-    <option value="BS">Chemsitry</option>
-    <option value="EN">Entrepreneurship</option>
-    <option value="H">History</option>
-    <option value="SO">Sociology</option>
-    <option value="PS">Psychology</option>
+    <option value="S">Sanskrit</option>
+    <option value="SS">Social Studies</option>
+    <option value="HI">Hindi</option>
+    <option value="K">Kannada</option>
+    <option value="F">French</option>
+    <option value="G">German</option>
 </select><br><br>
-
-<div class="row">
-    <select name="bookname" id="bookname" required>
-    <option value = '' disabled selected hidden> Select Subject First </option>
-    </select>
-      <script>
-        var appenddata1 = "";
-        var appenddata2 = "";
-        appenddata1 += "<option disabled selected hidden> Select Subject First </option> \n";
-        $.ajaxSetup({
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-        });
-        $("#bookname").show();
-        $('select#subject').change(function () {
-          var optionSelected = $(this).find("option:selected");
-          var valueSelected = optionSelected.val();
-          var subject = optionSelected.text();
-          //subject = 'English';
-          console.log('in chapter subject = ', subject);
-          console.log('clearing chapter list');
-          $("select#bookname option").remove();
-          appenddata1 = "<option value = bookname disabled selected hidden> Select Book Name </option> \n";
-
-          $.ajax({
-            type: "GET",
-            url: "/getdetails/",
-            data: {
-              'cnt1': subject
-            },
-            async: false,
-            success: function (result) {
-              console.log('Ajax call success', result);
-              console.log('in chapter I am printing results of length:', result.length);
-              // console.log(result);
-
-              for (var i = 0; i <= result.length - 1; i++) {
-                console.log('in chapter for loop', result[i].name);
-                appenddata1 += "<option value = " + result[i].name + "> " + result[i].name +" </option> \n";
-              };
-
-            }, // success function
-            error: function (textStatus, errorThrown) {
-              console.log('Ajax call failure', textStatus, errorThrown);
-              appenddata1 += "<option value = AjaxError> ServerError</option> \n";
-            }
-
-          }); // end of ajax get
-          console.log('(Outside Overall Get Setting Chapter List with :', appenddata1);
-          appenddata2+="<option value = AjaxError> ServerError</option>"
-          appenddata2+="<option value = AjaxError> ServerError2</option> \n"
-          $("#bookname").append(appenddata1);
-
-        }); // end of subject change function
-        console.log('(Inside Script  Setting and Showing Chapter List with :', appenddata1);
-        $("#bookname").show();
-      </script>
-      <br><br>
+</div>
+<div id="B" style="display: none;">
+  Subject: <select name="subject" id="subject" required onChange="form.submit();">
+      <option value="" disabled selected hidden>Select Subject</option>
+      <option value="M">Maths</option>
+      <option value="P">Physics</option>
+      <option value="C">Chemsitry</option>
+      <option value="CS">Computer Science</option>
+      <option value="B">Biology</option>
+      <option value="E">English</option>
+      <option value="A">Accountancy</option>
+      <option value="EC">Economics</option>
+      <option value="BS">Business Studies</option>
+      <option value="EN">Entrepreneurship</option>
+      <option value="H">History</option>
+      <option value="SO">Sociology</option>
+      <option value="PS">Psychology</option>
+  </select><br><br>
+  </div>
+</div>
 
 
-<!-- Book Name: <select name="bookname" id="bookname" required>
+Book Name: <select name="bookname" id="bookname" required>
     {% for i in bookchoices %}
         <option value="{{i}}">{{i}}</option>
     {% endfor %}
-</select><br><br> -->
+</select><br><br>
 Quantity: <input type="number" name="quan" id="quan" required><br><br>
 <!-- {{ book_form.as_p }}
 {{ give_order_form.as_p }} -->
-    <input type='submit' value='Submit'/>
+    <!--<input type='submit' value='Submit'/>-->
 </form>
+<script>
+$("#grade").change(function(){
+  $("#A,#B").hide();
+  if(($(this).val() == "9") || ($(this).val() == "10")) {
+    $("#A").show();
+    $("#Dummy").hide();
+  } else{
+     $("#B").show();
+     $("#Dummy").hide(); 
+  }
+});
+</script>
 {% endblock %}

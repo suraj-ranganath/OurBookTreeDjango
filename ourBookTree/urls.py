@@ -33,6 +33,5 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
     path('give/', BookGiveFormView),
     path('take/', BookTakeFormView),
-    path('getdetails/',getdetails)
 ]
 
