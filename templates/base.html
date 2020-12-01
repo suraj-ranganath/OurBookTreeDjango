@@ -1,9 +1,12 @@
 <!-- templates/base.html -->
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}Django Auth Tutorial{% endblock %}</title>
+  <title>{% block title %}Our Book Tree{% endblock %}</title>
+  <script src="{% static 'js/login.js' %}"></script> <!-- This is how to include a static file -->
+  <link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css" />
 </head>
 <body>
   <main>
