@@ -17,13 +17,13 @@ Grade: <select name="grade" id="grade" required>
 <div id="myAnswers">
 
 <div id="Dummy">
-  Subject: <select name="subject" id="subject" required>
-      <option value="" disabled selected hidden>Select Subject</option>
+  Subject: <select name="subject" id="subject" >
+      <option value="znmd" disabled selected hidden>Select Subject</option>
   </select><br><br>
 </div>
 <div id="A" style="display: none;">
-  Subject: <select name="subject" id="subject" required>
-    <option value="" disabled selected hidden>Select Subject</option>
+  Subject: <select name="subject" id="subject" onChange="form.submit();">
+    <option value="znmd" disabled selected hidden>Select Subject</option>
     <option value="M">Maths</option>
     <option value="P">Physics</option>
     <option value="C">Chemsitry</option>
@@ -39,8 +39,8 @@ Grade: <select name="grade" id="grade" required>
 </select><br><br>
 </div>
 <div id="B" style="display: none;">
-  Subject: <select name="subject" id="subject" required onChange="form.submit();">
-      <option value="" disabled selected hidden>Select Subject</option>
+  Subject: <select name="subject" id="subject" onChange="form.submit();" value="choosesubject" name="choosesubject" action="#">
+      <option value="znmd" disabled selected hidden>Select Subject</option>
       <option value="M">Maths</option>
       <option value="P">Physics</option>
       <option value="C">Chemsitry</option>
@@ -67,7 +67,7 @@ Book Name: <select name="bookname" id="bookname" required>
 Quantity: <input type="number" name="quan" id="quan" required><br><br>
 <!-- {{ book_form.as_p }}
 {{ give_order_form.as_p }} -->
-    <!--<input type='submit' value='Submit'/>-->
+    <input type='submit' value='SubmitForm' name="SubmitForm" action="#"/>
 </form>
 <script>
 $("#grade").change(function(){
@@ -80,5 +80,15 @@ $("#grade").change(function(){
      $("#Dummy").hide(); 
   }
 });
+
+$(function()
+{
+    $('choosesubject').change(function()
+    {
+        if (($(this).val() != 'znmd') || ($(this).val() != ''))
+        $('.choosesubject').replaceWith('<input type="text" name="choosesubject" id="choosesubject">');
+    });
+}
+);
 </script>
 {% endblock %}

@@ -142,9 +142,18 @@ def BookGiveFormView(request):
 
 def BookTakeFormView(request):
     if request.method == "POST":
-
-        userid = request.user.id
         entries = request.POST
+        # cursor.execute("select distinct bookName from obtapp_book where subject='{}' and grade='{}'".format(entries['subject'],entries['grade']))
+        # allbooks = cursor.fetchall()
+        print(dict(request.POST))
+        for i in request.POST:
+            print(request.POST[i])
+            if request.POST[i] == 'choosesubject':
+                print('hi')
+
+        '''
+        userid = request.user.id
+
         
         cursor.execute("insert into obtapp_take (userid_id,completedFlag) values ('{}',0)".format(userid))
         cursor.execute("select id from obtapp_book where grade = {} and subject = '{}' and bookname = '{}'".format(entries['grade'],entries['subject'],entries['bookname']))
@@ -153,12 +162,13 @@ def BookTakeFormView(request):
         cursor.execute("select id from obtapp_take where id=(select max(id) from obtapp_take) and userid_id = {}".format(userid))
         takeno = cursor.fetchall()[0][0]
         cursor.execute("insert into obtapp_takeorder (takeNo_id,bookID_id,quantity,completedFlag) values ({},{},{},0)".format(takeno,bookid,entries['quan']))
-
+        '''
 
 
         context = {
             'email':request.user.email,
             'bookchoices':['a','b','c'],
+            # 'allbooks':allbooks,
         }
         return render(request,"takeform.html",context)
     else:
