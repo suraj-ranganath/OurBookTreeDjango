@@ -1,6 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container">
+  <!--Data or Content-->
+  <div class="box-1">
+      <div class="content-holder">
+          <h2>Hello!</h2>
+          <p>Welcome to Our Book Tree!</p>
+          <a href = "{% url 'login' %}"><button>Login</button></a>
+      </div>
+  </div>
+  <div class="box-2">
+    <div class="login-form-container">
+      <h1>Sign Up Form</h1>
+        <form method="post">
+          {% csrf_token %}
+
+          {% for field in form %}
+          <p style="text-align:center;">
+            {{ field.label_tag }}
+            {{ field }}
+          </p>
+            <br>         
+          {% endfor %}
+          <button class="login-button" type="submit">Sign Up</button>
+        </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--
   <h2>Sign up</h2>
   <form method="post">
     {% csrf_token %}
@@ -17,5 +49,5 @@
       </p>
     {% endfor %}
     <button type="submit">Sign up</button>
-  </form>
+  </form>-->
 {% endblock %}
