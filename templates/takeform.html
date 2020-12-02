@@ -8,7 +8,7 @@
 <!-- {{ give_form.as_p }} -->
 Email: <input type='text' name="email" value={{email}} disabled><br><br>
 Grade: <select name="grade" id="grade" required onChange="form.submit();">
-  {% if not gradeflag %}
+  {% if not grade %}
     <option value="Dummy" disabled selected hidden>Select Grade</option>
     {% else %}
     <option value="Dummy" disabled selected hidden>{{grade}}</option>
@@ -20,9 +20,9 @@ Grade: <select name="grade" id="grade" required onChange="form.submit();">
 </select><br><br>
 
 
-<div id="Dummy">
+<!-- <div id="Dummy">
 
-    {% if not subflag %}
+    {% if not sub %}
     Subject: <select required name="subject" id="subject" >
     <option value="" disabled selected hidden>Select Subject</option>
     </select>
@@ -32,13 +32,15 @@ Grade: <select name="grade" id="grade" required onChange="form.submit();">
     </select>
     {% endif %}
  <br><br>
-</div>
-<div id="A" style="display: none;">
-  Subject: <select required name="subject" id="subject" onChange="form.submit();">
-    {% if not subflag %}
+</div> -->
+<!-- <div id="A" style="display: none;"> -->
+  
+    {% if not sub %}
+    Subject: <select required name="subject" id="subject" onChange="form.submit();">
     <option value="" disabled selected hidden>Select Subject</option>
     {% else %}
-    <option value="" selected>{{subject}}</option>
+    Subject: <select name="subject" id="subject" onChange="form.submit();">
+    <option value="" selected>{{sub}}</option>
     {% endif %}
     {% for i in sublist %}
     <option value="{{i.0}}">{{i.1}}</option>
@@ -55,10 +57,10 @@ Grade: <select name="grade" id="grade" required onChange="form.submit();">
     <option value="F">French</option>
     <option value="G">German</option> -->
 </select><br><br>
-</div>
+<!-- </div> -->
 <!-- <div id="B" style="display: none;">
   Subject: <select required name="subject" id="subject" onChange="form.submit();">
-    {% if not subflag %}
+    {% if not sub %}
     <option value="" disabled selected hidden>Select Subject</option>
     {% else %}
     <option value="" disabled selected hidden>{{subject}}</option>
@@ -82,13 +84,13 @@ Grade: <select name="grade" id="grade" required onChange="form.submit();">
 
 
 Book Name: <select name="bookname" id="bookname" required>
-  {% if bookflag %}
+  {% if not book %}
   <option value="" disabled selected hidden>Select Book</option>
   {% else %}
   <option value="" disabled selected hidden>{{book}}</option>
     {% endif %}
     {% for i in bookchoices %}
-        <option value="{{i}}">{{i.0}}</option>
+        <option value="{{i.0}}">{{i.0}}</option>
     {% endfor %}
 </select><br><br>
 Quantity: <input type="number" name="quan" id="quan" required><br><br>
