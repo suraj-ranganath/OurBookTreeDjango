@@ -147,8 +147,8 @@ def BookTakeFormView(request):
         global finalentries
         
         entries = request.POST
-        
-        if dict(request.POST).get('subject') in (None,''):
+        print(dict(request.POST).get('subject'))
+        if dict(request.POST).get('subject') in (None,'',['']):
             finalentries['grade'] = entries['grade']
             SUBJECT_LIST = []
             if entries['grade'] in ('11', '12'):
@@ -189,7 +189,9 @@ def BookTakeFormView(request):
             'grade':finalentries['grade'],
             'sublist':SUBJECT_LIST,
             }
-            print(finalentries)
+            print('finalentries: ',finalentries)
+            print('contaxt: ',context)
+            print('1')
             return render(request,"takeform.html",context)
         elif dict(request.POST).get('bookname') in (None,''):
             finalentries['subject'] = entries['subject']
@@ -204,6 +206,9 @@ def BookTakeFormView(request):
             'sub':finalentries['subject'],
             'grade':finalentries['grade'],
             }
+            print('finalentries: ',finalentries)
+            print('contaxt: ',context)
+            print('2')
             return render(request,"takeform.html",context)
         else:
             finalentries['bookname'] = entries['bookname']
@@ -234,7 +239,7 @@ def BookTakeFormView(request):
         try:
             context ={
                 'email':request.user.email,
-                'bookchoices':['a','b','c','RD Sharma'],
+                'bookchoices':[],
             }
             return render(request,"takeform.html",context)
         except:
