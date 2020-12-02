@@ -145,10 +145,10 @@ def BookGiveFormView(request):
 def BookTakeFormView(request):
     if request.method == "POST":
         global finalentries
+        
         entries = request.POST
         
         if dict(request.POST).get('subject') in (None,''):
-            
             finalentries['grade'] = entries['grade']
             SUBJECT_LIST = []
             if entries['grade'] in ('11', '12'):
