@@ -28,68 +28,20 @@ Grade: <select class='dropdown-trigger btn' name="grade" id="grade" required onC
 </select><br><br>
 
 
-<!-- <div id="Dummy">
 
-    {% if not sub %}
-    Subject: <select required name="subject" id="subject" >
-    <option value="" disabled selected hidden>Select Subject</option>
-    </select>
-    {% else %}
-    Subject: <select name="subject" id="subject" >
-    <option value="" disabled selected hidden>{{subject}}</option>
-    </select>
-    {% endif %}
- <br><br>
-</div> -->
-<!-- <div id="A" style="display: none;"> -->
  
     {% if not sub %}
     Subject: <select class='dropdown-trigger btn' required name="subject" id="subject" onChange="form.submit();">
     <option value="" disabled selected hidden>Select Subject</option>
     {% else %}
     Subject: <select class='dropdown-trigger btn' name="subject" id="subject" onChange="form.submit();">
-    <option value="" selected>{{sub}}</option>
+    <option value="" selected hidden>{{sub}}</option>
     {% endif %}
     {% for i in sublist %}
     <option value="{{i.0}}">{{i.1}}</option>
     {% endfor %}
-    <!-- <option value="P">Physics</option>
-    <option value="C">Chemsitry</option>
-    <option value="CS">Computer Science</option>
-    <option value="B">Biology</option>
-    <option value="E">English</option>
-    <option value="S">Sanskrit</option>
-    <option value="SS">Social Studies</option>
-    <option value="HI">Hindi</option>
-    <option value="K">Kannada</option>
-    <option value="F">French</option>
-    <option value="G">German</option> -->
-</select><br><br>
-<!-- </div> -->
-<!-- <div id="B" style="display: none;">
-  Subject: <select required name="subject" id="subject" onChange="form.submit();">
-    {% if not sub %}
-    <option value="" disabled selected hidden>Select Subject</option>
-    {% else %}
-    <option value="" disabled selected hidden>{{subject}}</option>
-    {% endif %}
-      <option value="M">Maths</option>
-      <option value="P">Physics</option>
-      <option value="C">Chemsitry</option>
-      <option value="CS">Computer Science</option>
-      <option value="B">Biology</option>
-      <option value="E">English</option>
-      <option value="A">Accountancy</option>
-      <option value="EC">Economics</option>
-      <option value="BS">Business Studies</option>
-      <option value="EN">Entrepreneurship</option>
-      <option value="H">History</option>
-      <option value="SO">Sociology</option>
-      <option value="PS">Psychology</option>
-  </select><br><br>
-  </div>
-</div> -->
 
+</select><br><br>
 
 Book Name: <select class='dropdown-trigger btn' name="bookname" id="bookname" required>
   {% if not book %}

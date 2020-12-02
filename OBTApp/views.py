@@ -147,9 +147,10 @@ def BookTakeFormView(request):
         global finalentries
         
         entries = request.POST
-        print(dict(request.POST).get('subject'))
         if dict(request.POST).get('subject') in (None,'',['']):
             finalentries['grade'] = entries['grade']
+            
+            global SUBJECT_LIST
             SUBJECT_LIST = []
             if entries['grade'] in ('11', '12'):
                 SUBJECT_LIST += [
@@ -185,37 +186,28 @@ def BookTakeFormView(request):
 
             context = {
             'email':request.user.email,
-            # 'gradeflag':gradeflag,
             'grade':finalentries['grade'],
             'sublist':SUBJECT_LIST,
             }
-            print('finalentries: ',finalentries)
-            print('contaxt: ',context)
-            print('1')
             return render(request,"takeform.html",context)
-        elif dict(request.POST).get('bookname') in (None,''):
+        elif dict(request.POST).get('bookname') in (None,'',['']):
             finalentries['subject'] = entries['subject']
-            print(finalentries)
             cursor.execute("select distinct bookName from obtapp_book where subject='{}' and grade={}".format(finalentries['subject'],finalentries['grade']))
             allbooks = cursor.fetchall()
 
             context = {
             'email':request.user.email,
             'bookchoices':allbooks,
-            # 'subflag':subflag,
             'sub':finalentries['subject'],
             'grade':finalentries['grade'],
+            'sublist':SUBJECT_LIST
             }
-            print('finalentries: ',finalentries)
-            print('contaxt: ',context)
-            print('2')
             return render(request,"takeform.html",context)
         else:
             finalentries['bookname'] = entries['bookname']
             finalentries['quan'] = entries['quan']
 
             userid = request.user.id
-            print(finalentries)
             cursor.execute("insert into obtapp_take (userid_id,completedFlag) values ('{}',0)".format(userid))
             cursor.execute("select id from obtapp_book where grade = {} and subject = '{}' and bookname = '{}'".format(finalentries['grade'],finalentries['subject'],finalentries['bookname']))
             bookid = cursor.fetchall()[0][0]
@@ -226,11 +218,6 @@ def BookTakeFormView(request):
             
             context = {
             'email':request.user.email,
-            # 'bookchoices':allbooks,
-            # 'bookflag':bookflag,
-            # 'sub':finalentries['subject'],
-            # 'grade':finalentries['grade'],
-            # 'book':finalentries['bookname'],
             }
             return render(request,"takeform.html",context)
 
@@ -239,14 +226,10 @@ def BookTakeFormView(request):
         try:
             context ={
                 'email':request.user.email,
-                'bookchoices':[],
             }
             return render(request,"takeform.html",context)
         except:
             return render(request,"home.html")
 
-def getBooks():
-    choice_list = ('M', 12)
-    return choice_list
 
 
