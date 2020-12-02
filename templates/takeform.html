@@ -3,11 +3,19 @@
 {% block title %}Take Books{% endblock %}
 
 {% block content %}
+<div class="row" style="padding:0%">
+  <center><h1 style="color:teal">Take Form</h1></center>
+  <div class="col s4 offset-s4">
+    <div class="card">
+      <div class="card-content">
 <form method="POST">
 {%csrf_token%}
+
+
+
 <!-- {{ give_form.as_p }} -->
 Email: <input type='text' name="email" value={{email}} disabled><br><br>
-Grade: <select name="grade" id="grade" required onChange="form.submit();">
+Grade: <select class='dropdown-trigger btn' name="grade" id="grade" required onChange="form.submit();">
   {% if not grade %}
     <option value="Dummy" disabled selected hidden>Select Grade</option>
     {% else %}
@@ -34,12 +42,12 @@ Grade: <select name="grade" id="grade" required onChange="form.submit();">
  <br><br>
 </div> -->
 <!-- <div id="A" style="display: none;"> -->
-  
+ 
     {% if not sub %}
-    Subject: <select required name="subject" id="subject" onChange="form.submit();">
+    Subject: <select class='dropdown-trigger btn' required name="subject" id="subject" onChange="form.submit();">
     <option value="" disabled selected hidden>Select Subject</option>
     {% else %}
-    Subject: <select name="subject" id="subject" onChange="form.submit();">
+    Subject: <select class='dropdown-trigger btn' name="subject" id="subject" onChange="form.submit();">
     <option value="" selected>{{sub}}</option>
     {% endif %}
     {% for i in sublist %}
@@ -83,7 +91,7 @@ Grade: <select name="grade" id="grade" required onChange="form.submit();">
 </div> -->
 
 
-Book Name: <select name="bookname" id="bookname" required>
+Book Name: <select class='dropdown-trigger btn' name="bookname" id="bookname" required>
   {% if not book %}
   <option value="" disabled selected hidden>Select Book</option>
   {% else %}
@@ -97,7 +105,13 @@ Quantity: <input type="number" name="quan" id="quan" required><br><br>
 <!-- {{ book_form.as_p }}
 {{ give_order_form.as_p }} -->
     <input type='submit' value='Submit' name="Submit" action="#"/>
+
+
 </form>
+</div>
+</div>
+</div>
+</div>
 <script>
 // $("#grade").change(function(){
 //   $("#A,#B").hide();

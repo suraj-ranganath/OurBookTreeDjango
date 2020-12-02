@@ -12,54 +12,52 @@
 </form>-->
 
 {% block content %}
-<div class="container">
-  <!--Data or Content-->
-  <div class="box-1">
-      <div class="content-holder">
-          <h2>Hello!</h2>
-          <p>Welcome to Our Book Tree!</p>
-          <a href = "{% url 'signup' %}"><button>Sign Up</button></a>
-      </div>
-  </div>
-
-  
-  <!--Forms-->
-  <!--
-  <div class="box-2">
-      <div class="login-form-container">
-          <h1>Login Form</h1>
-          <input type="text" placeholder="Username" class="input-field">
-          <br><br>
-          <input type="password" placeholder="Password" class="input-field">
-          <br><br>
-          <button class="login-button" type="button">Login</button>
-      </div>
-  -->    
-  <div class="box-2">
-    <div class="login-form-container">
-      <h1>Login Form</h1>
-        <form method="post">
-          {% csrf_token %}
-
-          {% for field in form %}
-            {{ field.label_tag }}
-            {{ field }}
-            <br><br>
-          {% endfor %}
-          <button class="login-button" type="submit">Log In</button>
-        </form>
+<div class="section"></div>
+  <main>
+    <center>
+      <div class = "row">
+      <img class="responsive-img" style="width: 100px;" src="https://static.wixstatic.com/media/408f3b_475b5a12cdc54a608377a6e926b974fa~mv2.jpeg" alt = "Our Book Tree"/>
+      <h6>Our Book Tree</h6>
     </div>
+      <h5 class="indigo-text">Please, login into your account</h5>
+      <div class="section"></div>
 
-<!--Create Container for Signup form-->
-  <div class="signup-form-container">
-      <h1>Sign Up Form</h1>
-      <input type="text" placeholder="Username" class="input-field">
-      <br><br>
-      <input type="email" placeholder="Email" class="input-field">
-      <br><br>
-      <input type="password" placeholder="Password" class="input-field">
-      <br><br>
-      <button class="signup-button" type="button">Sign Up</button>
-  </div>
-  </div>
-{% endblock %}
+      <div class="container">
+        <div class="z-depth-1 grey lighten-4 row" style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+
+          <form class="col s12" method="post">
+            {% csrf_token %}
+            <div class='row'>
+              <div class='col s12'>
+              </div>
+            </div>
+            
+            <div class='row'>
+              {% for field in form %}
+              <div class='input-field col s12'>
+                {{ field.label_tag }}
+                {{ field }}
+              </div>
+              {% endfor %}
+              <label style='float: right;'>
+								<a class='blue-text' href='#!'><b>Forgot Password?</b></a>
+							</label>
+            </div>
+            
+              
+
+            <center>
+              <div class='row'>
+                <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'>Login</button>
+              </div>
+            </center>
+          </form>
+        </div>
+      </div>
+      <a href="{% url 'signup' %}">Create account</a>
+    </center>
+
+    <div class="section"></div>
+    <div class="section"></div>
+  </main>
+  {% endblock %}

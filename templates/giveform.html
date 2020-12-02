@@ -3,18 +3,23 @@
 {% block title %}Give Books{% endblock %}
 
 {% block content %}
+<div class="row" style="padding:0%">
+    <center><h1 style="color:teal">Give Form</h1></center>
+    <div class="col s4 offset-s4">
+      <div class="card">
+        <div class="card-content">
 <form method="POST">
 {%csrf_token%}
 <!-- {{ give_form.as_p }} -->
 Email: <input type='text' name="email" value={{email}} disabled><br><br>
-Grade: <select name="grade" id="grade" required>
+Grade: <select class='dropdown-trigger btn' name="grade" id="grade" required>
     <option value="9">9</option>
     <option value="10">10</option>
     <option value="11">11</option>
     <option value="12">12</option>
 </select><br><br>
 Book Name: <input type="text" name="bookname" id="bookname" required><br><br>
-Subject: <select name="subject" id="subject" required>
+Subject: <select class='dropdown-trigger btn' name="subject" id="subject" required>
     <option value="M">Maths</option>
     <option value="P">Physics</option>
     <option value="C">Chemsitry</option>
@@ -31,7 +36,7 @@ Subject: <select name="subject" id="subject" required>
 </select><br><br>
 Quantity: <input type="number" name="quan" id="quan" required><br><br>
 Year of Publishing: <input type='text' name='yearpub'  id='yearpub' data-length="4" pattern="[0-9]{4}" required/><br><br>
-Condition: <select name="condition" id="condition" required>
+Condition: <select class='dropdown-trigger btn' name="condition" id="condition" required>
     <option value="1">Like new</option>
     <option value="2">Fair</option>
     <option value="3">Pages torn</option>
@@ -42,4 +47,8 @@ Condition: <select name="condition" id="condition" required>
 {{ give_order_form.as_p }} -->
     <input type='submit' value='Submit'/>
 </form>
+</div>
+</div>
+</div>
+</div>
 {% endblock %}
