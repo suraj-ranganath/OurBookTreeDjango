@@ -14,7 +14,7 @@ from django.contrib.auth import login, authenticate
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.decorators import login_required
 from OBTApp.tokens import account_activation_token
-import secrets
+from OBTApp import secrets
 # Create your views here.
 cursor = connection.cursor()
 finalentriestake = {}

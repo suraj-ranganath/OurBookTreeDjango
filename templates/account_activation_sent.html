@@ -1,5 +1,25 @@
 {% extends 'base.html' %}
 
+{% block title %}Email Sent{% endblock %}
+{% load static %}
+{% block navbar %}{% endblock %}
+{% block footer %}{% endblock %}
 {% block content %}
-  <p>Please confirm your email address to complete the registration. </p>
+<div class="container">
+    <br><br><br>
+    <div class="card">
+    <br>
+    <a href="{% url 'home' %}" style = "color: black;">
+        
+          
+          <center><img class="responsive-img" style="width: 100px;" src="{% static 'OBTApp/images/logo.jpeg' %}" alt = "Our Book Tree">
+          <h6>Our Book Tree</h6></a></center>
+        
+    <center>
+  <h1>Check your inbox!</h1>
+  <p>We've emailed you instructions for signing up. You should receive the email shortly!</p>
+  <br><br>
+</center>
+</div>
+</div>
 {% endblock %}
