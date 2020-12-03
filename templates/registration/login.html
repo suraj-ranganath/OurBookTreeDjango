@@ -17,10 +17,10 @@
   <main>
     <center>
       <a href="{% url 'home' %}" style = "color: black;">
-        <div class = "row">
+      <div class = "row">
         <!-- <img class="responsive-img" style="width: 100px;" src="https://static.wixstatic.com/media/408f3b_475b5a12cdc54a608377a6e926b974fa~mv2.jpeg" alt = "Our Book Tree"/> -->
         
-        <img class="responsive-img" style="width: 100px;" src="{% static "OBTApp/images/logo.jpeg" %}" alt = "Our Book Tree"/>
+        <img class="responsive-img" style="width: 100px;" src="{% static "OBTApp/images/logo.jpeg" %}" alt = "Our Book Tree">
         <h6>Our Book Tree</h6></a>
       </div>
         <h5 class="teal-text">Enter your login details</h5>
@@ -44,7 +44,7 @@
               </div>
               {% endfor %}
               <label style='float: right;'>
-								<a class='teal-text' href='#!'><b>Forgot Password?</b></a>
+								<a class='teal-text' href="{% url 'password_reset' %}"><b>Forgot Password?</b></a>
 							</label>
             </div>
             
