@@ -20,7 +20,8 @@
 </div>
 {% else %}
 <div class="container">
-  <center><h3>You are not logged in</h3></center>
+  <center><h3>You are not logged in</h3><br>
+    <a class="waves-effect waves-light btn" href="{% url 'login' %}" >Login</a></center>
   <!--<a href="{% url 'login' %}">Log In</a>
   <a href="{% url 'signup' %}">Register</a>-->
 </div>

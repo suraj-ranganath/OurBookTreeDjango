@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="row" style="padding:0%">
-  <center><h1 style="color:teal">Take Form</h1></center>
+  <center><h2 style="color:teal">Take Form</h2></center>
   <div class="col s4 offset-s4">
     <div class="card">
       <div class="card-content">
@@ -56,7 +56,9 @@ Book Name: <select class='dropdown-trigger btn' name="bookname" id="bookname" re
 Quantity: <input type="number" name="quan" id="quan" required><br><br>
 <!-- {{ book_form.as_p }}
 {{ give_order_form.as_p }} -->
-    <input type='submit' value='Submit' name="Submit" action="#"/>
+<center><button class="btn waves-effect waves-light" type="submit" name="action">Submit
+  <i class="material-icons right">send</i>
+</button></center>
 
 
 </form>
