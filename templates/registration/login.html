@@ -10,17 +10,19 @@
   {{ form.as_p }}
   <button type="submit">Log In</button>
 </form>-->
-
+{% block navbar %}{% endblock %}
 {% block content %}
 <div class="section"></div>
   <main>
     <center>
-      <div class = "row">
-      <!-- <img class="responsive-img" style="width: 100px;" src="https://static.wixstatic.com/media/408f3b_475b5a12cdc54a608377a6e926b974fa~mv2.jpeg" alt = "Our Book Tree"/> -->
-      <img class="responsive-img" style="width: 100px;" src="{% static "OBTApp/images/logo.jpeg" %}" alt = "Our Book Tree"/>
-      <h6>Our Book Tree</h6>
-    </div>
-      <h5 class="indigo-text">Please, login into your account</h5>
+      <a href="{% url 'home' %}" style = "color: black;">
+        <div class = "row">
+        <!-- <img class="responsive-img" style="width: 100px;" src="https://static.wixstatic.com/media/408f3b_475b5a12cdc54a608377a6e926b974fa~mv2.jpeg" alt = "Our Book Tree"/> -->
+        
+        <img class="responsive-img" style="width: 100px;" src="{% static "OBTApp/images/logo.jpeg" %}" alt = "Our Book Tree"/>
+        <h6>Our Book Tree</h6></a>
+      </div>
+        <h5 class="teal-text">Enter your login details</h5>
       <div class="section"></div>
 
       <div class="container">
@@ -41,7 +43,7 @@
               </div>
               {% endfor %}
               <label style='float: right;'>
-								<a class='blue-text' href='#!'><b>Forgot Password?</b></a>
+								<a class='teal-text' href='#!'><b>Forgot Password?</b></a>
 							</label>
             </div>
             
@@ -49,7 +51,7 @@
 
             <center>
               <div class='row'>
-                <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'>Login</button>
+                <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect teal lighten-1'>Login</button>
               </div>
             </center>
           </form>

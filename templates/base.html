@@ -14,6 +14,22 @@
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
+  {% block navbar %}
+  <nav class="teal lighten-1" role="navigation">
+    <div class="nav-wrapper">
+      <a href="{% url 'home' %}" class="brand-logo" style="padding-left: 20px;"><img src = "{% static "OBTApp/images/logo-wobg.png" %}" width = "35" height = auto> Our Book Tree</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="#">Dummy</a></li>
+        <li><a href="#">Dummy</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'logout' %}" >Log out</a></li>
+        {% else %}
+        <li><a href="{% url 'login' %}" >Login</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+  {% endblock %}
   <main>
     {% block content %}
     {% endblock %}

@@ -3,15 +3,28 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
-  Hi {{ user.username }}!
 
-  <p><a href="..\give">Give Books</a>
-  <a href ="..\take">Take Books</a></p>
-  <p><a href="{% url 'logout' %}">Log Out</a></p>
+<div class="row">
+{% if user.is_authenticated %}
+<div class="col s12">
+  <center><h3>Hi {{ user.username }}! What do you want to do?</h3></center>
+  <br>
+  <br>
+  <div class="col s6">
+  <a class="waves-effect waves-light btn col s4 offset-s8" href="..\give">Give Books</a>
+</div>
+<div class="col s6">
+  <a class="waves-effect waves-light btn col s4" href ="..\take">Take Books</a>
+  </div>
+  </div>
+</div>
 {% else %}
-  <p>You are not logged in</p>
-  <a href="{% url 'login' %}">Log In</a>
-  <a href="{% url 'signup' %}">Register</a>
+<div class="container">
+  <center><h3>You are not logged in</h3></center>
+  <!--<a href="{% url 'login' %}">Log In</a>
+  <a href="{% url 'signup' %}">Register</a>-->
+</div>
 {% endif %}
+
+
 {% endblock %}
