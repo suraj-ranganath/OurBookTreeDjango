@@ -11,6 +11,7 @@
   <button type="submit">Log In</button>
 </form>-->
 {% block navbar %}{% endblock %}
+{% block footer %}{% endblock %}
 {% block content %}
 <div class="section"></div>
   <main>
@@ -57,7 +58,7 @@
           </form>
         </div>
       </div>
-      <a href="{% url 'signup' %}">Create account</a>
+      <a href="{% url 'signup' %}">Don't have an account? Sign up!</a>
     </center>
 
     <div class="section"></div>

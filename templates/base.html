@@ -11,8 +11,9 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    <!-- Compiled and minified JavaScript -->
+   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+   
 </head>
 <body>
   {% block navbar %}
@@ -20,8 +21,8 @@
     <div class="nav-wrapper">
       <a href="{% url 'home' %}" class="brand-logo" style="padding-left: 20px;"><img src = "{% static "OBTApp/images/logo-wobg.png" %}" width = "35" height = auto> Our Book Tree</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="#">Dummy</a></li>
-        <li><a href="#">Dummy</a></li>
+        <!--<li><a href="#">Dummy</a></li>
+        <li><a href="#">Dummy</a></li>-->
         {% if user.is_authenticated %}
         <li><a href="{% url 'logout' %}" >Log out</a></li>
         {% else %}
@@ -35,5 +36,13 @@
     {% block content %}
     {% endblock %}
   </main>
+  {% block footer %}
+  <footer class="page-footer teal lighten-1">
+    <div class="container">
+     <center> © Copyright 2020 Our Book Tree - All Rights Reserved</center>
+    </div>
+<br>
+  </footer>
+  {% endblock %}
 </body>
 </html>

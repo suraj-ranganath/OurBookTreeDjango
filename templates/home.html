@@ -4,28 +4,141 @@
 
 {% block content %}
 
-<div class="row">
+
 {% if user.is_authenticated %}
-<div class="col s12">
-  <center><h3>Hi {{ user.username }}! What do you want to do?</h3></center>
-  <br>
-  <br>
-  <div class="col s6">
-  <a class="waves-effect waves-light btn col s4 offset-s8" href="..\give">Give Books</a>
-</div>
-<div class="col s6">
-  <a class="waves-effect waves-light btn col s4" href ="..\take">Take Books</a>
+<!--Style for the tabbed card-->
+<style>        .tabs .tab a {
+  color: rgba(38, 166, 154, 0.7);
+  /*Custom Text Color*/
+}
+
+.tabs .tab a:hover {
+  color:#26a69a;
+  /*Custom Color On Hover*/
+}
+
+.tabs .tab a:focus.active {
+  color:#26a69a;
+  /*Custom Text Color While Active*/
+  background-color: rgba(38, 166, 154, 0.2);
+  /*Custom Background Color While Active*/
+}
+
+.tabs .indicator {
+  background-color:#26a69a;
+  /*Custom Color Of Indicator*/
+}</style>
+<div class="section no-pad-bot" id="index-banner">
+  <div class="container">
+  <div class="card-panel">
+    <br><br>
+    <h4 class="header center">Hi {{ user.username }}! What do you want to do?</h4>
+    <div class="row center">
+      <!--<a class="waves-effect waves-light btn col s4 offset-s8" href="..\give">Give Books</a>-->
+      <br>
+      <div class="col s6">
+      <a class="waves-effect waves-light btn-large col s4 offset-s8" href="..\give">Give Books</a>
+    </div>
+    <div class="col s6">
+      <a class="waves-effect waves-light btn-large col s4" href ="..\take">Take Books</a>
+        
+    </div>
+      
+      </div>
+      <br><br>
+    </div>
   </div>
+    <br>
+
+  </div>
+  <div class="section no-pad-bot" id="stats">
+  <div class="row">
+    <div class="container">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Your Submissions</span>
+          <!--<p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>-->
+        </div>
+        <div class="card-tabs">
+          <ul class="tabs tabs-fixed-width">
+            <li class="tab"><a class="teal-text" href="#given">Books Given</a></li>
+            <li class="tab"><a class="teal-text" href="#taken">Books Taken</a></li>
+          </ul>
+        </div>
+        <div class="card-content grey lighten-4">
+          <div id="given">Put all books given, Qauntity, status(Delivered or not), etc</div>
+          <div id="taken">Put all books taken, Quantity, status(Delivered or not), etc</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
+
+<script>
+  $(document).ready(function(){
+    $('.tabs').tabs();
+  });
+</script>
+
 {% else %}
-<div class="container">
+<!--div class="container">
   <center><h3>You are not logged in</h3><br>
     <a class="waves-effect waves-light btn" href="{% url 'login' %}" >Login</a></center>
+  </div>-->
   <!--<a href="{% url 'login' %}">Log In</a>
   <a href="{% url 'signup' %}">Register</a>-->
-</div>
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br><br>
+      <h1 class="header center teal-text">Welcome to Our Book Tree</h1>
+      <div class="row center">
+        <h5 class="header col s12 light">A platform that connects Kumarans students, and facilitates the exchange of textbooks and reference books, all while contributing to a noble cause.</h5>
+      </div>
+      <div class="row center">
+        <a href="{% url 'login' %}" id="download-button" class="btn-large waves-effect waves-light teal">Get Started</a>
+      </div>
+      <br><br>
+  
+    </div>
+  </div>
+  
+  
+  <div class="container">
+    <div class="section">
+  
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center teal-text"><i class="material-icons">group</i></h2>
+            <h5 class="center">Register</h5>
+  
+            <p class="light">All our users are registered and verified users so you don't have to worry about imposters.</p>
+          </div>
+        </div>
+  
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center teal-text"><i class="material-icons">book</i></h2>
+            <h5 class="center">Exchange Books</h5>
+  
+            <p class="light">We find a suitable match for you based on your requirements and location. You exchange the books with your match in person or by Dunzo.</p>
+          </div>
+        </div>
+  
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h2 class="center teal-text"><i class="material-icons">donation</i></h2>
+            <h5 class="center">Donate</h5>
+  
+            <p class="light">We have a voluntary donation drive because we believe that one act of good motivates another. Pass on the goodness and light up another child's life!</p>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+    <br><br>
+  </div>
 {% endif %}
-
-
 {% endblock %}
