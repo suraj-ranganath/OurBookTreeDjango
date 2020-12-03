@@ -87,9 +87,9 @@ def account_activation_sent(request):
 
 def BookGiveFormView(request):
     if request.method == 'POST':
-
-        userid = request.user.id
         entries = request.POST
+        userid = request.user.id
+        
 
         cursor.execute("insert into obtapp_book (grade,bookName,subject) values ('{}','{}','{}')".format(entries['grade'],entries['bookname'],entries['subject']))
         cursor.execute("insert into obtapp_give (userid_id,completedFlag) values ('{}',0)".format(userid))
@@ -147,7 +147,7 @@ def BookTakeFormView(request):
         global finalentries
         
         entries = request.POST
-        if dict(request.POST).get('subject') in (None,'',['']):
+        if dict(request.POST).get('subject') in (None,'',['']) and dict(request.POST).get('bookname') in (None,'',['']):
             finalentries['grade'] = entries['grade']
             
             global SUBJECT_LIST
