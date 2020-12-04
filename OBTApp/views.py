@@ -19,6 +19,7 @@ from OBTApp import secrets
 cursor = connection.cursor()
 finalentriestake = {}
 finalentriesgive = {}
+var = {}
 
 def EmailSend(subject,body,ToEmail):
     gmail_user = 'bookabookasap@gmail.com'
@@ -89,88 +90,100 @@ def account_activation_sent(request):
 def BookGiveFormView(request):
     if request.method == 'POST':
         global finalentriesgive
+        global var
         userid = request.user.id
         entries = request.POST
+        print(entries)
+        if dict(request.POST).get('action') != ['']:
+            if dict(request.POST).get('subject') in (None,'',['']) and dict(request.POST).get('bookname') in (None,'',['']) and dict(request.POST).get('booknameother') in (None,'',['']):
 
-        if dict(request.POST).get('subject') in (None,'',['']) and dict(request.POST).get('bookname') in (None,'',['']) and dict(request.POST).get('booknameother') in (None,'',['']):
+                finalentriesgive['grade'] = entries['grade']
 
-            finalentriesgive['grade'] = entries['grade']
-            
-            global SUBJECT_LIST
-            SUBJECT_LIST = []
-            if entries['grade'] in ('11', '12'):
-                SUBJECT_LIST += [
-                    ('M', 'Maths'),
-                    ('P', 'Physics'),
-                    ('C', 'Chemistry'),
-                    ('CS', 'Computer Science'),
-                    ('B', 'Biology'),
-                    ('E', 'English'),
-                    ('A','Accountancy'),
-                    ('EC','Economics'),
-                    ('BS','Business Studies'),
-                    ('EN','Entrepreneurship'),
-                    ('H','History'),
-                    ('SO','Sociology'),
-                    ('PS','Psychology'),
-                ]
-            elif entries['grade'] in ('9','10'):
-                SUBJECT_LIST += [
-                    ('M', 'Maths'),
-                    ('P', 'Physics'),
-                    ('C', 'Chemistry'),
-                    ('CS', 'Computer Science'),
-                    ('B', 'Biology'),
-                    ('E', 'English'),
-                    ('S','Sanskrit'),
-                    ('SS','Social Studies'),
-                    ('HI','Hindi'),
-                    ('K','Kannada'),
-                    ('F','French'),
-                    ('G','German'),
-                ]
+                global SUBJECT_LIST
+                SUBJECT_LIST = []
+                if entries['grade'] in ('11', '12'):
+                    SUBJECT_LIST += [
+                        ('M', 'Maths'),
+                        ('P', 'Physics'),
+                        ('C', 'Chemistry'),
+                        ('CS', 'Computer Science'),
+                        ('B', 'Biology'),
+                        ('E', 'English'),
+                        ('A','Accountancy'),
+                        ('EC','Economics'),
+                        ('BS','Business Studies'),
+                        ('EN','Entrepreneurship'),
+                        ('H','History'),
+                        ('SO','Sociology'),
+                        ('PS','Psychology'),
+                    ]
+                elif entries['grade'] in ('9','10'):
+                    SUBJECT_LIST += [
+                        ('M', 'Maths'),
+                        ('P', 'Physics'),
+                        ('C', 'Chemistry'),
+                        ('CS', 'Computer Science'),
+                        ('B', 'Biology'),
+                        ('E', 'English'),
+                        ('S','Sanskrit'),
+                        ('SS','Social Studies'),
+                        ('HI','Hindi'),
+                        ('K','Kannada'),
+                        ('F','French'),
+                        ('G','German'),
+                    ]
 
-            context = {
-            'email':request.user.email,
-            'grade':finalentriesgive['grade'],
-            'sublist':SUBJECT_LIST,
-            }
-            return render(request,"giveform.html",context)
-        
-        elif dict(request.POST).get('bookname') in (None,'',['']) and dict(request.POST).get('booknameother') in (None,'',['']):
+                context = {
+                'email':request.user.email,
+                'grade':finalentriesgive['grade'],
+                'sublist':SUBJECT_LIST,
+                }
+                return render(request,"giveform.html",context)
 
-            finalentriesgive['subject'] = entries['subject']
-            cursor.execute("select distinct bookName from obtapp_book where subject='{}' and grade={}".format(finalentriesgive['subject'],finalentriesgive['grade']))
-            allbooks = cursor.fetchall()
-            context = {
-            'email':request.user.email,
-            'bookchoices':allbooks,
-            'grade':finalentriesgive['grade'],
-            'sublist':SUBJECT_LIST,
-            'sub':finalentriesgive['subject']
-            }
-            return render(request,"giveform.html",context)
-        elif dict(request.POST).get('bookname') == ["Other"] and dict(request.POST).get('booknameother') in (None,'',['']):
-            cursor.execute("select distinct bookName from obtapp_book where subject='{}' and grade={}".format(finalentriesgive['subject'],finalentriesgive['grade']))
-            allbooks = cursor.fetchall()
-            context = {
-            'email':request.user.email,
-            'bookchoices':allbooks,
-            'grade':finalentriesgive['grade'],
-            'sublist':SUBJECT_LIST,
-            'sub':finalentriesgive['subject'],
-            'otherflag':True,
-            'book':"Other..",
-            }
-            return render(request,"giveform.html",context)
-        elif entries['quan'] != '' and entries['yearpub'] != '' and entries['condition'] != '':
+            elif dict(request.POST).get('bookname') in (None,'',['']) and dict(request.POST).get('booknameother') in (None,'',['']):
+
+                finalentriesgive['subject'] = entries['subject']
+                cursor.execute("select distinct bookName from obtapp_book where subject='{}' and grade={}".format(finalentriesgive['subject'],finalentriesgive['grade']))
+                allbooks = cursor.fetchall()
+                var['allbooks'] = allbooks
+                context = {
+                'email':request.user.email,
+                'bookchoices':allbooks,
+                'grade':finalentriesgive['grade'],
+                'sublist':SUBJECT_LIST,
+                'sub':finalentriesgive['subject']
+                }
+                return render(request,"giveform.html",context)
+            elif dict(request.POST).get('bookname') == ["Other"] and dict(request.POST).get('booknameother') in (None,'',['']):
+                # cursor.execute("select distinct bookName from obtapp_book where subject='{}' and grade={}".format(finalentriesgive['subject'],finalentriesgive['grade']))
+                # allbooks = cursor.fetchall()
+                context = {
+                'email':request.user.email,
+                'bookchoices':var['allbooks'],
+                'grade':finalentriesgive['grade'],
+                'sublist':SUBJECT_LIST,
+                'sub':finalentriesgive['subject'],
+                'otherflag':True,
+                'book':"Other..",
+                }
+                return render(request,"giveform.html",context)
+            elif entries['bookname'] != ['Other']:
+                finalentriesgive['bookname'] = entries['bookname']
+                context = {
+                'email':request.user.email,
+                'bookchoices':var['allbooks'],
+                'grade':finalentriesgive['grade'],
+                'sublist':SUBJECT_LIST,
+                'sub':finalentriesgive['subject'],
+                'book':finalentriesgive['bookname'],
+                }
+                return render(request,"giveform.html",context)
+        else:
 
             finalentriesgive['quan'] = entries['quan']
             finalentriesgive['yearpub'] = entries['yearpub']
             finalentriesgive['condition'] = entries['condition']
-            if dict(request.POST).get('booknameother') == None:
-                finalentriesgive['bookname'] = entries['bookname']
-            else:
+            if dict(request.POST).get('booknameother') != None:
                 finalentriesgive['bookname'] = entries['booknameother']
             print(finalentriesgive)
             cursor.execute("insert into obtapp_book (grade,bookName,subject) values ('{}','{}','{}')".format(finalentriesgive['grade'],finalentriesgive['bookname'],finalentriesgive['subject']))
