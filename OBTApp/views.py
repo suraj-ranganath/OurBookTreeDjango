@@ -91,7 +91,9 @@ def BookGiveFormView(request):
         global finalentriesgive
         userid = request.user.id
         entries = request.POST
-        if dict(request.POST).get('subject') in (None,'',['']) and dict(request.POST).get('bookname') in (None,'',['']):
+
+        if dict(request.POST).get('subject') in (None,'',['']) and dict(request.POST).get('bookname') in (None,'',['']) and dict(request.POST).get('booknameother') in (None,'',['']):
+
             finalentriesgive['grade'] = entries['grade']
             
             global SUBJECT_LIST
@@ -135,21 +137,41 @@ def BookGiveFormView(request):
             }
             return render(request,"giveform.html",context)
         
-        elif dict(request.POST).get('bookname') in (None,'',['']):
+        elif dict(request.POST).get('bookname') in (None,'',['']) and dict(request.POST).get('booknameother') in (None,'',['']):
+
             finalentriesgive['subject'] = entries['subject']
+            cursor.execute("select distinct bookName from obtapp_book where subject='{}' and grade={}".format(finalentriesgive['subject'],finalentriesgive['grade']))
+            allbooks = cursor.fetchall()
             context = {
             'email':request.user.email,
+            'bookchoices':allbooks,
             'grade':finalentriesgive['grade'],
             'sublist':SUBJECT_LIST,
             'sub':finalentriesgive['subject']
             }
             return render(request,"giveform.html",context)
+        elif dict(request.POST).get('bookname') == ["Other"]:
+            cursor.execute("select distinct bookName from obtapp_book where subject='{}' and grade={}".format(finalentriesgive['subject'],finalentriesgive['grade']))
+            allbooks = cursor.fetchall()
+            context = {
+            'email':request.user.email,
+            'bookchoices':allbooks,
+            'grade':finalentriesgive['grade'],
+            'sublist':SUBJECT_LIST,
+            'sub':finalentriesgive['subject'],
+            'otherflag':True,
+            'book':"Other..",
+            }
+            return render(request,"giveform.html",context)
         else:
+
             finalentriesgive['quan'] = entries['quan']
             finalentriesgive['yearpub'] = entries['yearpub']
             finalentriesgive['condition'] = entries['condition']
-            finalentriesgive['bookname'] = entries['bookname']
-            print(finalentriesgive)
+            if dict(request.POST).get('booknameother') == None:
+                finalentriesgive['bookname'] = entries['bookname']
+            else:
+                finalentriesgive['bookname'] = entries['booknameother']
             cursor.execute("insert into obtapp_book (grade,bookName,subject) values ('{}','{}','{}')".format(finalentriesgive['grade'],finalentriesgive['bookname'],finalentriesgive['subject']))
             cursor.execute("insert into obtapp_give (userid_id,completedFlag) values ('{}',0)".format(userid))
             cursor.execute("select id from obtapp_book where id=(select max(id) from obtapp_book)") #find better way
@@ -259,7 +281,7 @@ def BookTakeFormView(request):
             'bookchoices':allbooks,
             'sub':finalentriestake['subject'],
             'grade':finalentriestake['grade'],
-            'sublist':SUBJECT_LIST
+            'sublist':SUBJECT_LIST,
             }
             return render(request,"takeform.html",context)
         else:

@@ -17,9 +17,9 @@
 Email: <input type='text' name="email" value={{email}} disabled><br><br>
 Grade: <select class='dropdown-trigger btn' name="grade" id="grade" required onChange="form.submit();">
   {% if not grade %}
-    <option value="Dummy" disabled selected hidden>Select Grade</option>
+    <option value="" disabled selected hidden>Select Grade</option>
     {% else %}
-    <option value="Dummy" disabled selected hidden>{{grade}}</option>
+    <option value="" disabled selected hidden>{{grade}}</option>
     {% endif %}
     <option value="9">9</option>
     <option value="10">10</option>

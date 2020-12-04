@@ -12,11 +12,13 @@
 {%csrf_token%}
 <!-- {{ give_form.as_p }} -->
 Email: <input type='text' name="email" value={{email}} disabled><br><br>
-Grade: <select class='dropdown-trigger btn' name="grade" id="grade" required onChange="form.submit();">
+
     {% if not grade %}
-      <option value="Dummy" disabled selected hidden>Select Grade</option>
+    Grade: <select class='dropdown-trigger btn' name="grade" id="grade" required onChange="form.submit();">
+      <option value="" disabled selected hidden>Select Grade</option>
       {% else %}
-      <option value="Dummy" disabled selected hidden>{{grade}}</option>
+      Grade: <select class='dropdown-trigger btn' name="grade" id="grade"  onChange="form.submit();">
+      <option value="" disabled selected hidden>{{grade}}</option>
       {% endif %}
       <option value="9">9</option>
       <option value="10">10</option>
@@ -39,7 +41,22 @@ Grade: <select class='dropdown-trigger btn' name="grade" id="grade" required onC
       {% endfor %}
   
   </select><br><br>
-Book Name: <input type="text" name="bookname" id="bookname" required><br><br>
+  
+    {% if not book %}
+    Book Name: <select class='dropdown-trigger btn' name="bookname" id="bookname" required  onChange="form.submit();">
+    <option value="" disabled selected hidden>Select Book</option>
+    {% else %}
+    Book Name: <select class='dropdown-trigger btn' name="bookname" id="bookname"  onChange="form.submit();">
+    <option value="" disabled selected hidden>{{book}}</option>
+      {% endif %}
+      {% for i in bookchoices %}
+          <option value="{{i.0}}">{{i.0}}</option>
+      {% endfor %}
+      <option value="Other">Other..</option>
+  </select><br><br>
+{% if otherflag %}
+Please specify: <input type='text' name='booknameother' id='booknameother' required/><br><br>
+{% endif %}
 Quantity: <input type="number" name="quan" id="quan" required><br><br>
 Year of Publishing: <input type='text' name='yearpub'  id='yearpub' data-length="4" pattern="[0-9]{4}" required/><br><br>
 Condition: <select class='dropdown-trigger btn' name="condition" id="condition" required>
