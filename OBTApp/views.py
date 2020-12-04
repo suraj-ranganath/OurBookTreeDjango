@@ -150,7 +150,7 @@ def BookGiveFormView(request):
             'sub':finalentriesgive['subject']
             }
             return render(request,"giveform.html",context)
-        elif dict(request.POST).get('bookname') == ["Other"]:
+        elif dict(request.POST).get('bookname') == ["Other"] and dict(request.POST).get('booknameother') in (None,'',['']):
             cursor.execute("select distinct bookName from obtapp_book where subject='{}' and grade={}".format(finalentriesgive['subject'],finalentriesgive['grade']))
             allbooks = cursor.fetchall()
             context = {
@@ -163,7 +163,7 @@ def BookGiveFormView(request):
             'book':"Other..",
             }
             return render(request,"giveform.html",context)
-        else:
+        elif entries['quan'] != '' and entries['yearpub'] != '' and entries['condition'] != '':
 
             finalentriesgive['quan'] = entries['quan']
             finalentriesgive['yearpub'] = entries['yearpub']
@@ -172,6 +172,7 @@ def BookGiveFormView(request):
                 finalentriesgive['bookname'] = entries['bookname']
             else:
                 finalentriesgive['bookname'] = entries['booknameother']
+            print(finalentriesgive)
             cursor.execute("insert into obtapp_book (grade,bookName,subject) values ('{}','{}','{}')".format(finalentriesgive['grade'],finalentriesgive['bookname'],finalentriesgive['subject']))
             cursor.execute("insert into obtapp_give (userid_id,completedFlag) values ('{}',0)".format(userid))
             cursor.execute("select id from obtapp_book where id=(select max(id) from obtapp_book)") #find better way
