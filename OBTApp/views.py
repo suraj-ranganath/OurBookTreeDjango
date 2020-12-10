@@ -20,6 +20,8 @@ cursor = connection.cursor()
 finalentriestake = {}
 finalentriesgive = {}
 var = {}
+filttake = {}
+filtgive = {}
 
 def LoggedInHomeView(request):
     cursor.execute("select b.grade,b.subject,b.bookname,go.quantity,go.completedFlag from obtapp_giveorder go,obtapp_give g,obtapp_book b where b.id=go.bookID_id and g.id=go.giveNo_id and g.userid_id={}".format(request.user.id))
@@ -31,7 +33,20 @@ def LoggedInHomeView(request):
         'bksgiven':bksgiven,
         'bkstaken':bkstaken,
     }
-    return render(request,"home.html",context)
+    if request.method == "POST":
+        filters = dict(request.POST)
+        filters.pop('csrfmiddlewaretoken')
+        for i in filters:
+            if 'take' in i:
+                filttake[i] = filters[i]
+            elif 'give' in key:
+                filtgive[i] = filters[i]
+        print(filttake)
+        context['bkstaken'] = [i for i in bkstaken if i[1] == filttake['subtake'][0]]
+        print(context['bkstaken'])
+        return render(request,"home.html",context)
+    else:
+        return render(request,"home.html",context)
 
 def EmailSend(subject,body,ToEmail):
     gmail_user = 'bookabookasap@gmail.com'

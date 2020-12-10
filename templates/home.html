@@ -91,6 +91,20 @@
             </table>
           </div>
           <div id="taken">
+            <form action="" method="POST">
+          {%csrf_token%}
+            <select class='dropdown-trigger btn' name='gradetake' id='gradetake' onChange="form.submit();">
+              <option>All grades</option>
+              <option>2</option>
+            </select>
+            <select class='dropdown-trigger btn' name='subtake' onChange="form.submit();">
+              <option>choose subject</option>
+              <option>M</option>
+            </select>
+            <select class='dropdown-trigger btn'>
+              <option>choose bookname</option>
+            </select>
+            </form>
             <table class="centered responsive-table">
               <thead>
                 <tr>
