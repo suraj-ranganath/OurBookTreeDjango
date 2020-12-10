@@ -66,8 +66,54 @@
           </ul>
         </div>
         <div class="card-content grey lighten-4">
-          <div id="given">Put all books given, Qauntity, status(Delivered or not), etc</div>
-          <div id="taken">Put all books taken, Quantity, status(Delivered or not), etc</div>
+          <div id="given">
+            <table class="centered responsive-table">
+              <thead>
+                <tr>
+                    <th>Grade</th>
+                    <th>Subject</th>
+                    <th>Book Name</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%for i in bksgiven%}
+                <tr>
+                  <td>{{i.0}}</td>
+                  <td>{{i.1}}</td>
+                  <td>{{i.2}}</td>
+                  <td>{{i.3}}</td>
+                  <td>{{i.4}}</td>
+                </tr>
+                {%endfor%}
+              </tbody>
+            </table>
+          </div>
+          <div id="taken">
+            <table class="centered responsive-table">
+              <thead>
+                <tr>
+                    <th>Grade</th>
+                    <th>Subject</th>
+                    <th>Book Name</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%for i in bkstaken%}
+                <tr>
+                  <td>{{i.0}}</td>
+                  <td>{{i.1}}</td>
+                  <td>{{i.2}}</td>
+                  <td>{{i.3}}</td>
+                  <td>{{i.4}}</td>
+                </tr>
+                {%endfor%}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
