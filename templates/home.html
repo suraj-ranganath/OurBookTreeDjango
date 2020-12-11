@@ -98,8 +98,11 @@
               <option>2</option>
             </select>
             <select class='dropdown-trigger btn' name='subtake' onChange="form.submit();">
-              <option>choose subject</option>
-              <option>M</option>
+              {% if filttake.subtake %}
+              <option selected disabled hidden>{{filttake.subtake.0}}</option>
+              {% endif %}
+              <option value=''>All subjects</option>
+              <option>E</option>
             </select>
             <select class='dropdown-trigger btn'>
               <option>choose bookname</option>

@@ -41,9 +41,9 @@ def LoggedInHomeView(request):
                 filttake[i] = filters[i]
             elif 'give' in key:
                 filtgive[i] = filters[i]
-        print(filttake)
-        context['bkstaken'] = [i for i in bkstaken if i[1] == filttake['subtake'][0]]
-        print(context['bkstaken'])
+
+        context['bkstaken'] = tuple(i for i in bkstaken if i[1] == filttake['subtake'][0])
+        context['filttake'] = filttake
         return render(request,"home.html",context)
     else:
         return render(request,"home.html",context)
