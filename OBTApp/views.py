@@ -24,7 +24,7 @@ filttake = {}
 filtgive = {}
 
 def LoggedInHomeView(request):
-    '''
+    
     cursor.execute("select b.grade,b.subject,b.bookname,go.quantity,go.completedFlag from obtapp_giveorder go,obtapp_give g,obtapp_book b where b.id=go.bookID_id and g.id=go.giveNo_id and g.userid_id={}".format(request.user.id))
     bksgiven = cursor.fetchall()
     cursor.execute("select b.grade,b.subject,b.bookname,tko.quantity,tko.completedFlag from obtapp_takeorder tko,obtapp_take t,obtapp_book b where b.id=tko.bookID_id and t.id=tko.takeNo_id and t.userid_id={}".format(request.user.id))
@@ -34,7 +34,7 @@ def LoggedInHomeView(request):
         'bksgiven':bksgiven,
         'bkstaken':bkstaken,
     }
-    '''
+    
     return render(request,"home.html")
 
     '''
@@ -127,6 +127,7 @@ def BookGiveFormView(request):
         userid = request.user.id
         entries = request.POST
         print(entries)
+        print(finalentriesgive)
         if dict(request.POST).get('action') != ['']:
             if dict(request.POST).get('subject') in (None,'',['']) and dict(request.POST).get('bookname') in (None,'',['']) and dict(request.POST).get('booknameother') in (None,'',['']):
 
