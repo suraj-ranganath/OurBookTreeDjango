@@ -56,7 +56,7 @@
     <div class="container">
       <div class="card">
         <div class="card-content">
-          <span class="card-title">Your Submissions</span>
+          <span class="card-title">Pending Requests</span>
           <!--<p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>-->
         </div>
         <div class="card-tabs">
@@ -79,13 +79,19 @@
               </thead>
               <tbody>
                 {%for i in bksgiven%}
+                {% if not i.6 %}
                 <tr>
                   <td>{{i.0}}</td>
                   <td>{{i.1}}</td>
                   <td>{{i.2}}</td>
                   <td>{{i.3}}</td>
                   <td>{{i.4}}</td>
+                  <form action="#" method="POST">
+                    {%csrf_token%}
+                  <td><input class="text btn indigo" type="submit" value="OK" name="give{{i.5}}" action="giveack"></input></td>
+                  </form>
                 </tr>
+                {% endif %}
                 {%endfor%}
               </tbody>
             </table>
@@ -126,6 +132,10 @@
                   <td>{{i.2}}</td>
                   <td>{{i.3}}</td>
                   <td>{{i.4}}</td>
+                  <form action="#" method="POST">
+                    {%csrf_token%}
+                  <td><input class="text btn indigo" type="submit" value="OK" name="{{i.5}}" action="takeack"></input></td>
+                  </form>
                 </tr>
                 {%endfor%}
               </tbody>

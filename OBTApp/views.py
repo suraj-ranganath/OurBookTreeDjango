@@ -24,10 +24,18 @@ filttake = {}
 filtgive = {}
 
 def LoggedInHomeView(request):
+    print(request.POST)
+    if request.method=="POST":
+        for i in request.POST:
+            if request.POST[i]=="OK":
+                if i[:4]=="give":
+                    cursor.execute("update obtapp_give set AckFlag=1 where id={}".format(int(i[4:])))
+                elif i[:4]=="take":
+                    cursor.execute("update obtapp_take set AckFlag=1 where id={}".format(int(i[4:])))
     try:
-       cursor.execute("select b.grade,b.subject,b.bookname,go.quantity,go.completedFlag from obtapp_giveorder go,obtapp_give g,obtapp_book b where b.id=go.bookID_id and g.id=go.giveNo_id and g.userid_id={}".format(request.user.id))
+       cursor.execute("select b.grade,b.subject,b.bookname,go.quantity,go.completedFlag,g.id,g.AckFlag from obtapp_giveorder go,obtapp_give g,obtapp_book b where b.id=go.bookID_id and g.id=go.giveNo_id and g.userid_id={} and g.AckFlag=0".format(request.user.id))
        bksgiven = cursor.fetchall()
-       cursor.execute("select b.grade,b.subject,b.bookname,tko.quantity,tko.completedFlag from obtapp_takeorder tko,obtapp_take t,obtapp_book b where b.id=tko.bookID_id and t.id=tko.takeNo_id and t.userid_id={}".format(request.user.id))
+       cursor.execute("select b.grade,b.subject,b.bookname,tko.quantity,tko.completedFlag,t.id,t.AckFlag from obtapp_takeorder tko,obtapp_take t,obtapp_book b where b.id=tko.bookID_id and t.id=tko.takeNo_id and t.userid_id={} and t.AckFlag=0".format(request.user.id))
        bkstaken = cursor.fetchall()
        context = {
            'user':request.user,
@@ -223,7 +231,7 @@ def BookGiveFormView(request):
                 finalentriesgive['bookname'] = entries['booknameother']
             print(finalentriesgive)
             cursor.execute("insert into obtapp_book (grade,bookName,subject) values ('{}','{}','{}')".format(finalentriesgive['grade'],finalentriesgive['bookname'],finalentriesgive['subject']))
-            cursor.execute("insert into obtapp_give (userid_id,completedFlag) values ('{}',0)".format(userid))
+            cursor.execute("insert into obtapp_give (userid_id,AckFlag) values ('{}',0)".format(userid))
             cursor.execute("select id from obtapp_book where id=(select max(id) from obtapp_book)") #find better way
             bookid=cursor.fetchall()[0][0]
             cursor.execute("select id from obtapp_give where id=(select max(id) from obtapp_give) and userid_id = {}".format(userid))
@@ -339,7 +347,7 @@ def BookTakeFormView(request):
             finalentriestake['quan'] = entries['quan']
 
             userid = request.user.id
-            cursor.execute("insert into obtapp_take (userid_id,completedFlag) values ('{}',0)".format(userid))
+            cursor.execute("insert into obtapp_take (userid_id,AckFlag) values ('{}',0)".format(userid))
             cursor.execute("select id from obtapp_book where grade = {} and subject = '{}' and bookname = '{}'".format(finalentriestake['grade'],finalentriestake['subject'],finalentriestake['bookname']))
             bookid = cursor.fetchall()[0][0]
 

@@ -77,7 +77,7 @@ class Book(models.Model):
 #This table contains details of Take Requests.
 class Take(models.Model):
     userid = models.ForeignKey(User, on_delete=models.CASCADE)
-    completedFlag = models.IntegerField(default=0)
+    AckFlag = models.IntegerField(default=0)
 #This table contains the details about each taken book. 
 class TakeOrder(models.Model):
     takeNo = models.ForeignKey(Take, on_delete=models.CASCADE)
@@ -87,7 +87,7 @@ class TakeOrder(models.Model):
 #This table contains details of Give Requests.
 class Give(models.Model):
     userid = models.ForeignKey(User, on_delete=models.CASCADE)
-    completedFlag = models.IntegerField(default=0)
+    AckFlag = models.IntegerField(default=0)
 #This table contains the details about each given book.
 class GiveOrder(models.Model):
     CONDITION_S = (('1' ,'Like new'),
