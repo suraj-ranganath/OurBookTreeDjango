@@ -34,5 +34,6 @@ urlpatterns = [
     path('', LoggedInHomeView,name='home'),
     path('give/', BookGiveFormView),
     path('take/', BookTakeFormView),
+    path('submissions/',SubView)
 ]
 

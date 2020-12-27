@@ -63,6 +63,18 @@ def LoggedInHomeView(request):
     else:
         return render(request,"home.html",context)
     '''
+def SubView(request):
+    cursor.execute("select b.grade,b.subject,b.bookname,go.quantity,go.completedFlag,g.id,g.AckFlag from obtapp_giveorder go,obtapp_give g,obtapp_book b where b.id=go.bookID_id and g.id=go.giveNo_id and g.userid_id={}".format(request.user.id))
+    bksgiven = cursor.fetchall()
+    cursor.execute("select b.grade,b.subject,b.bookname,tko.quantity,tko.completedFlag,t.id,t.AckFlag from obtapp_takeorder tko,obtapp_take t,obtapp_book b where b.id=tko.bookID_id and t.id=tko.takeNo_id and t.userid_id={}".format(request.user.id))
+    bkstaken = cursor.fetchall()
+    print(bksgiven)
+    context = {
+        'user':request.user,
+        'bksgiven':bksgiven,
+        'bkstaken':bkstaken,
+    }
+    return render(request,"submissions.html",context)
 
 def EmailSend(subject,body,ToEmail):
     gmail_user = 'bookabookasap@gmail.com'
